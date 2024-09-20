@@ -1,8 +1,11 @@
-import React from 'react'
-import CategoryCard from './CategoryCard'
+import React from "react";
+import CategoryCard from "./CategoryCard";
 import { Container, Row, Col } from "react-bootstrap";
-const categories=[{"id":2,"name":"Basket"},{"id":3,"name":"Skate"}]
-
+const categories = [
+  { id: 1, name: "Urban" },
+  { id: 2, name: "Basket" },
+  { id: 3, name: "Skate" },
+];
 
 const AllCategories = () => {
   return (
@@ -19,7 +22,7 @@ const AllCategories = () => {
           })}
       </Row>
     </Container>
-  )
-}
+  );
+};
 
-export default AllCategories
+export default AllCategories;

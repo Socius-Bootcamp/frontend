@@ -18,7 +18,7 @@ const NotFound = () => {
       </Container>
       <Footer />
     </Fragment>
-  )
-}
+  );
+};
 
-export default NotFound
+export default NotFound;

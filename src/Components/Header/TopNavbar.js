@@ -1,28 +1,43 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
+const categories = [
+  { id: 1, name: "Urban" },
+  { id: 2, name: "Basket" },
+  { id: 3, name: "Skate" },
+];
+
 
 const TopNavbar = () => {
   return (
     <Navbar bg="dark" expand="lg" variant="dark">
       <Container>
-        <NavLink to="/" className="navbar-brand" >Cheap Nike</NavLink>
+        <NavLink to="/" className="navbar-brand">
+          Cheap Nike
+        </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <NavLink to="/" className="nav-link">Home</NavLink>
+            <NavLink to="/" className="nav-link">
+              Home
+            </NavLink>
             <NavDropdown title="Categories" id="basic-nav-dropdown">
-                <Link to="/Category/Urban" className="text-capitalize dropdown-item">
-                    Urban
-                </Link>
-                <Link to="/Category/Basket" className="text-capitalize dropdown-item">
-                    Basket
-                </Link>
-                <Link to="/Category/Skate" className="text-capitalize dropdown-item">
-                    Skate
-                </Link>
+              {categories &&
+                categories.map((category, index) => {
+                  return (
+                    <Link
+                      to={`/category/${category.name}`}
+                      className="text-capitalize dropdown-item"
+                      key={index}
+                    >
+                      {category.name}
+                    </Link>
+                  );
+                })}
             </NavDropdown>
-            <NavLink to="Products" className="nav-link">Zapatillas</NavLink>
+            <NavLink to="Products" className="nav-link">
+              Zapatillas
+            </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>
