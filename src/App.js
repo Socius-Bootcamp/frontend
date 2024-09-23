@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import NotFound from "./Pages/NotFound";
 import Products from "./Pages/Products/Products";
 import SpecificCategory from "./Pages/Products/SpecificCategory";
+import ShoeManager from "./Pages/Shoes/ShoeManager";
 
 //import './App.css';
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/Products" element={<Products />} />
         <Route path="category/:SpecificCategory" element={<SpecificCategory />} />
+        <Route path="/shoes" element={<ShoeManager />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Fragment>

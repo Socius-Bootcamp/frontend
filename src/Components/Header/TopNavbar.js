@@ -38,6 +38,9 @@ const TopNavbar = () => {
             <NavLink to="Products" className="nav-link">
               Zapatillas
             </NavLink>
+            <NavLink to="/shoes" className="nav-link">
+              Administrador
+            </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>
