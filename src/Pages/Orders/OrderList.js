@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import {Table, Button, Modal, Form, Card} from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 import TopNavbar from "../../Components/Header/TopNavbar";
 import Footer from "../../Components/Footer/Footer";
 
 const OrderList = () => {
+
+    const navigate = useNavigate();
+
     const [orders, setOrders] = useState([
         { id: 1, status: 'Confirmado', total: 150.00, date: '2024-09-23', address: 'Calle Falsa 123', province: 'Valparaíso', city: 'Viña del Mar', country: 'Chile', userId: 1 },
         { id: 2, status: 'En Proceso', total: 200.00, date: '2024-09-22', address: 'Calle Verdadera 456', province: 'Santiago', city: 'Santiago', country: 'Chile', userId: 2 },
@@ -27,6 +31,10 @@ const OrderList = () => {
         setOrders(orders.map(order => (order.id === selectedOrder.id? {...order, status: newStatus} : order)));
         handleClose();
     };
+
+    const handleShowDetail = (order) => {
+        navigate('/order/${order.id}');
+    }
 
     return(
         <div className="container-fluid p-0">
@@ -66,8 +74,8 @@ const OrderList = () => {
                                     <td className="d-none d-lg-table-cell">{order.country}</td>
                                     <td>{order.userId}</td>
                                     <td className="text-center">
-                                        {/* <Button className='btn btn-outline-warning' onClick={() => handleShow(order)}>Editar Estado</Button> */}
-                                        <Button variant="outline-warning"  onClick={() => handleShow(order)}>Editar Estado</Button>
+                                        <Button variant="outline-warning m-1"  onClick={() => handleShow(order)}>Editar Estado</Button>
+                                        <Button variant="outline-info m-1" onClick={() => handleShowDetail(order)}>Detalle</Button>
                                     </td>
                                 </tr>
                             ))}
