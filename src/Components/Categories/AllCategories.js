@@ -1,13 +1,10 @@
 import React from "react";
 import CategoryCard from "./CategoryCard";
 import { Container, Row, Col } from "react-bootstrap";
-const categories = [
-  { id: 1, name: "Urban" },
-  { id: 2, name: "Basket" },
-  { id: 3, name: "Skate" },
-];
+import { useSelector } from "react-redux";
 
 const AllCategories = () => {
+  const { categories } = useSelector((state) => state.categories);
   return (
     <Container className="my-3 py-3">
       <h3 className="text-center mb-4">Browse Categories</h3>
