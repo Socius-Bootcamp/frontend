@@ -30,7 +30,7 @@ const OrderList = () => {
 
     return(
         <div className="container-fluid p-0">
-            <TopNavbar showFullMenu={true} />
+            <TopNavbar />
             <h1 className="m-4 text-center">Administrador de Órdenes</h1>
             <Card className="m-2">
                 <Card.Body>

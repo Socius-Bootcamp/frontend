@@ -6,7 +6,7 @@ import LatestProducts from "../../Components/Product/LatestProducts";
 const Products = () => {
   return (
     <Fragment>
-      <TopNavbar showFullMenu={true} />
+      <TopNavbar />
       <LatestProducts />
       <Footer />
     </Fragment>
