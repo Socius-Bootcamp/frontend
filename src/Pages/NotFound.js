@@ -7,7 +7,11 @@ import TopNavbar from "../Components/Header/TopNavbar";
 const NotFound = () => {
   return (
     <Fragment>
+<<<<<<< HEAD
       <TopNavbar showFullMenu={true} />
+=======
+      <TopNavbar />
+>>>>>>> 87ddb550eb80194417eae7759df5a1399e2be311
       <Container>
         <div className="m-auto w-100 text-center my-5">
           <h1 className="text-danger">(0o0) Page Not Found</h1>

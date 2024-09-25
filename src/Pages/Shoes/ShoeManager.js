@@ -40,7 +40,11 @@ const ShoeManager = () => {
     return (
         
         <div className='container-fluid p-0'>
+<<<<<<< HEAD
             <TopNavbar showFullMenu={true} />
+=======
+            <TopNavbar />
+>>>>>>> 87ddb550eb80194417eae7759df5a1399e2be311
             <h1 className='text-center mt-5'>Administrador de Productos</h1>
             <div className='row mx-5'>
                 {/* <div className='col-6'>

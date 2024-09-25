@@ -30,7 +30,11 @@ const OrderList = () => {
 
     return(
         <div className="container-fluid p-0">
+<<<<<<< HEAD
             <TopNavbar showFullMenu={true} />
+=======
+            <TopNavbar />
+>>>>>>> 87ddb550eb80194417eae7759df5a1399e2be311
             <h1 className="m-4 text-center">Administrador de Órdenes</h1>
             <Card className="m-2">
                 <Card.Body>
