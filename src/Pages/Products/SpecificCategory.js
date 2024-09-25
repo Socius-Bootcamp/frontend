@@ -39,7 +39,7 @@ const SpecificCategory = () => {
   }, [SpecificCategory, categoryId]);
   return (
     <Fragment>
-      <TopNavbar />
+      <TopNavbar showFullMenu={true} />
       <Container>
         <div className="my-4">
           <h4 className="mb-4">

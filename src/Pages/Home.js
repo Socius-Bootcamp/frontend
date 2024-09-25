@@ -8,7 +8,7 @@ import LatestProducts from "../Components/Product/LatestProducts";
 const Home = () => {
   return (
     <Fragment>
-      <TopNavbar />
+      <TopNavbar showFullMenu={true} />
       <HeaderSlider />
       <AllCategories />
       <LatestProducts />
