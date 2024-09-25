@@ -11,7 +11,7 @@ const categories = [
 
 const TopNavbar = ({ showFullMenu }) => {
   return (
-    <Navbar bg="dark" expand="lg" variant="dark" className="fixed-top">
+    <Navbar bg="dark" expand="lg" variant="dark" >
       <Container>
         <NavLink to="/" className="navbar-brand">
           <img
@@ -24,7 +24,7 @@ const TopNavbar = ({ showFullMenu }) => {
         {showFullMenu && (
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <NavLink to="/" className="nav-link">
+              <NavLink to="/Home" className="nav-link">
                 Home
               </NavLink>
               <NavDropdown title="Categories" id="basic-nav-dropdown">
@@ -59,4 +59,3 @@ const TopNavbar = ({ showFullMenu }) => {
 };
 
 export default TopNavbar;
-

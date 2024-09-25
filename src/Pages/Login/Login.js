@@ -16,7 +16,7 @@ const Login = () => {
 
     try {
       // Realiza la solicitud de inicio de sesión
-      const response = await axios.post('http://localhost:3000/api/login', {
+      const response = await axios.post('http://localhost:3000/api/auth/login', {
         email,
         password
       });
@@ -31,9 +31,9 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <Fragment>
-        <TopNavbar showFullMenu={false} />
+    <Fragment>
+      <TopNavbar showFullMenu={false} />  
+      <div className="login-container">
         <Container fluid>
           <Row className="w-100">
             <Col xs={10} sm={8} md={6} lg={4} className="left-align">
@@ -75,9 +75,9 @@ const Login = () => {
             </Col>
           </Row>
         </Container>
-        <Footer />
-      </Fragment>
-    </div>
+        <Footer />  
+      </div>
+    </Fragment>
   );
 };
 
