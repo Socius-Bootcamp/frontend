@@ -1,0 +1,33 @@
+.login-container {
+    height: 100vh;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-image: url('/public/img/Login/Login2.jpg'); /* Asegúrate de que la ruta sea correcta */
+    padding-top: 80px; /* Espacio en la parte superior para el Navbar */
+}
+
+.login-card {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 2rem;
+    position: absolute; /* Permite centrarlo en la página */
+    top: 90%; /* Coloca el card en el centro vertical */
+    left: 65%; /* Coloca el card en el centro horizontal */
+    transform: translate(-50%, -50%); /* Centra el card perfectamente */
+}
+
+.login-card h3 {
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 576px) {
+    .login-container {
+        padding: 1rem; /* Añadir algo de padding en pantallas pequeñas *?/
+    }
+
+    .login-card {
+        padding: 1.5rem; /* Reducir el padding del card en pantallas pequeñas */
+    }
+}
