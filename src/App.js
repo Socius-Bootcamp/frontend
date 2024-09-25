@@ -6,6 +6,8 @@ import Products from "./Pages/Products/Products";
 import SpecificCategory from "./Pages/Products/SpecificCategory";
 import ShoeManager from "./Pages/Shoes/ShoeManager";
 import OrderList from './Pages/Orders/OrderList';
+import OrderDetail from './Pages/Orders/OrderDetail';
+
 
 //import './App.css';
 function App() {
@@ -17,6 +19,7 @@ function App() {
         <Route path="category/:SpecificCategory" element={<SpecificCategory />} />
         <Route path="/shoes" element={<ShoeManager />} />
         <Route path="/orders" element={<OrderList />} />
+        <Route path="/order/:id" element={<OrderDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Fragment>
