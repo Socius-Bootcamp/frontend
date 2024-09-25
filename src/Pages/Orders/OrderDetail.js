@@ -18,8 +18,8 @@ const users = [
   ];
   
   const orders = [
-    { id: 1, status: 'Confirmado', total: 150.00, userId: 1 },
-    { id: 2, status: 'En Proceso', total: 200.00, userId: 2 },
+    { id: 1, status: 'Confirmado', total: 200, userId: 1 },
+    { id: 2, status: 'En Proceso', total: 90, userId: 2 },
   ];
 
 const OrderDetail = () => {
@@ -75,16 +75,19 @@ const OrderDetail = () => {
                             {items.map((item) => (
                             <tr key={item.id}>
                                 <td>
-                                <img src={item.img} alt={item.name} width="50" />
+                                <img src={item.img} alt={item.name} width="100" />
                                 </td>
                                 <td>{item.name}</td>
                                 <td>{item.qty}</td>
-                                <td>${item.price.toFixed(2)}</td>
-                                <td>${(item.qty * item.price).toFixed(2)}</td>
+                                <td>${item.price}</td>
+                                <td>${(item.qty * item.price)}</td>
                             </tr>
                             ))}
                         </tbody>
                         </Table>
+                        <div className="d-flex justify-content-end mt-4">
+                            <h5>Total de la orden: ${order.total}</h5>
+                        </div>
                     </Card.Body>
                     </Card>
                 </div>

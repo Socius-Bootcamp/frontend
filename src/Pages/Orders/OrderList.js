@@ -10,8 +10,8 @@ const OrderList = () => {
     const navigate = useNavigate();
 
     const [orders, setOrders] = useState([
-        { id: 1, status: 'Confirmado', total: 150.00, date: '2024-09-23', address: 'Calle Falsa 123', province: 'Valparaíso', city: 'Viña del Mar', country: 'Chile', userId: 1 },
-        { id: 2, status: 'En Proceso', total: 200.00, date: '2024-09-22', address: 'Calle Verdadera 456', province: 'Santiago', city: 'Santiago', country: 'Chile', userId: 2 },
+        { id: 1, status: 'Confirmado', total: 200, date: '2024-09-23', address: 'Calle Falsa 123', province: 'Valparaíso', city: 'Viña del Mar', country: 'Chile', userId: 1 },
+        { id: 2, status: 'En Proceso', total: 90, date: '2024-09-22', address: 'Calle Verdadera 456', province: 'Santiago', city: 'Santiago', country: 'Chile', userId: 2 },
     ]);
 
     const [showModal, setShowModal] = useState(false);
@@ -33,7 +33,7 @@ const OrderList = () => {
     };
 
     const handleShowDetail = (order) => {
-        navigate('/order/${order.id}');
+        navigate(`/order/${order.id}`);
     }
 
     return(
@@ -62,7 +62,7 @@ const OrderList = () => {
                                 <tr key={order.id}>
                                     <td className="text-center">{order.id}</td>
                                     <td>{order.status}</td>
-                                    <td>{order.total}</td>
+                                    <td>${order.total}</td>
                                     <td>{order.date}</td>
                                     <td className="d-lg-none">
                                         {order.address},
