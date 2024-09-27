@@ -8,15 +8,19 @@ const headers = {
 
 export const cartFetch = createAsyncThunk("cart/cartFetch", async () => {
   try {
-    const { data } = await axios.get("http://localhost:3000/api/cart/" + "3");
+    const user=JSON.parse(localStorage.getItem("token"));//MODIFICAR CON LO DEL AUTH
+    console.log(user);
+    console.log(user.id);
+    const { data } = await axios.get("http://localhost:3000/api/cart/" + user.id); //modificar una vez se pueda enviar el id de otra manera
     return data;
   } catch (error) {
-    console.error(error.message);
+    console.error(error.name+" on GET cart: "+error.message+" "+error.code);
   }
 });
 
 export const addItem = createAsyncThunk("cart/addItem", async (info) => {
   try {
+    const user=JSON.parse(localStorage.getItem("token")); //MODIFICAR
     let quantity = info.cartItem.qty;
     if (info.mode === "plus") {
       quantity += 1;
@@ -25,7 +29,7 @@ export const addItem = createAsyncThunk("cart/addItem", async (info) => {
     }
     const { data } = await axios.post("http://localhost:3000/api/cart/",
       {
-        UserId: 3,
+        UserId: user.id,
         qty: quantity,
         ProductId: info.cartItem.ProductId,
       },
@@ -35,15 +39,16 @@ export const addItem = createAsyncThunk("cart/addItem", async (info) => {
     );
     return data;
   } catch (error) {
-    console.error(error.message);
+    console.error(error.name+" on addItem cart: "+error.message+" "+error.code);
   }
 });
 
 export const emptyCart = createAsyncThunk("cart/emptyCart", async (data) => {
   try {
+    const user=JSON.parse(localStorage.getItem("token")); //MODIFICAR
     const { data } = await axios.put("http://localhost:3000/api/cart/clear",
       {
-        UserId: 3,
+        UserId: user.id,
       },
       {
       headers: headers
@@ -51,7 +56,7 @@ export const emptyCart = createAsyncThunk("cart/emptyCart", async (data) => {
     );
     return data;
   } catch (error) {
-    console.error(error.message);
+    console.error(error.name+" on empty cart: "+error.message+" "+error.code);
   }
 });
 
@@ -59,19 +64,20 @@ export const removeItem = createAsyncThunk(
   "cart/removeItem",
   async (cartItem) => {
     try {
+      const user=JSON.parse(localStorage.getItem("token")); //MODIFICAR
       //since axios DELETE  only accepts 2 parameters, we has to only give the URL and a {} of the headers and data.
       const { data } = await axios.delete("http://localhost:3000/api/cart", 
         {
           headers: headers,
           data:{
-            UserId: 3,
+            UserId: user.id,
             ProductId: cartItem.ProductId
           }
         }
       );
       return data;
     } catch (error) {
-      console.error(error.message);
+      console.error(error.name+" on removeItem cart: "+error.message+" "+error.code);
     }
   }
 );

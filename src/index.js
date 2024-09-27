@@ -10,9 +10,23 @@ import Store from "./Store";
 import { productsFetch } from "./Features/Product/ProductSlice";
 import { categoriesFetch } from "./Features/Category/CategorySlice";
 import { cartFetch } from "./Features/Cart/CartSlice";
-Store.dispatch(productsFetch());
-Store.dispatch(categoriesFetch());
-Store.dispatch(cartFetch());
+import { ordersFetch } from "./Features/Order/OrderSlice";
+
+Store.dispatch(productsFetch()).catch((error) => {
+    console.log("No connection to products on DB, "+error.message);
+})
+Store.dispatch(categoriesFetch()).catch((error) => {
+    console.log("No connection to categories on DB, "+error.message);
+}) ;
+if ((localStorage.getItem("token"))){
+  Store.dispatch(cartFetch()).catch((error) => {
+    console.log("No connection to cart on DB, "+error.message);
+  });
+  Store.dispatch(ordersFetch()).catch((error) => {
+    console.log("No connection to cart on DB, "+error.message);
+  });
+}
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

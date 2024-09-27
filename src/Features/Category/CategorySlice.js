@@ -1,21 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const categoriesFetch = createAsyncThunk(
-    "categories/categoriesFetch",
-    async () => {
-        try{
-            const response = await fetch('http://localhost:3000/api/categories');
-            if(!response.ok){
-                throw new Error(`Response status: ${response.status}`);
-            }
-            const json = await response.json();
-            console.log(json);
-            return json;
-
-        }catch(error){
-            console.error(error.message);
-        }
-    }
+  "categories/categoriesFetch",
+  async () => {
+      try{
+        const { data } = await axios.get('http://localhost:3000/api/categories');
+        return data;
+      } catch (error) {
+        console.error(error.name+" on GET categories: "+error.message+" "+error.code);
+      }
+  }
 )
 
 const CategorySlice = createSlice({

@@ -12,6 +12,7 @@ import ProductDetails from "./Pages/Products/ProductDetails/ProductDetails";
 import './App.css';
 import CartCheckout from "./Pages/Cart/CartCheckout";
 import Login from "./Pages/Login/Login";
+import UserProfile from "./Pages/User/UserProfile";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/Product/:id" element={<ProductDetails />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/CartCheckout" element={<CartCheckout />}/>
+        <Route path="/Profile" element={<UserProfile />}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Fragment>

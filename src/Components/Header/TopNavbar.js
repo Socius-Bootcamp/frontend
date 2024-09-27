@@ -15,6 +15,10 @@ const categories = [
 
 
 const TopNavbar = ({ hideFullMenu }) => {
+  let user=null;
+  if(localStorage.getItem("token")){
+    user=JSON.parse(localStorage.getItem("token"));
+  }
   //const { categories } = useSelector((state) => state.categories);
   const cart= useSelector((state) => state.cart);
   return (
@@ -51,14 +55,22 @@ const TopNavbar = ({ hideFullMenu }) => {
             <NavLink to="/Products" className="nav-link">
               Zapatillas
             </NavLink>
-            <NavLink to="/shoes" className="nav-link">
-              Administrar Productos
-            </NavLink>
-            <NavLink to="/orders" className="nav-link">
-              Administrar Ordenes
-            </NavLink>
+            { user.admin &&  (
+              <NavDropdown title="Administration" id="basic-nav-dropdown">
+                <Link to="/shoes" className="text-capitalize dropdown-item">
+                Administrar Productos
+                </Link>
+                <Link to="/orders" className="text-capitalize dropdown-item">
+                  Administrar Ordenes
+                </Link>
+              </NavDropdown>       
+            )}
+            
             <NavLink to="/Cart" className="nav-link">
                 Cart ({cart.CartItems.length})
+            </NavLink>
+            <NavLink to="/Profile" className="nav-link">
+                User
             </NavLink>
           </Nav>
         </Navbar.Collapse>

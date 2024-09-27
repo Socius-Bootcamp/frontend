@@ -1,57 +1,82 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 import React from 'react'
 
-export const createOrder = createAsyncThunk("order/createOrder", async (data) => {
-    try{
-      const response = await fetch('http://localhost:3000/api/orders', {
-        method: 'POST',
-        headers:{Accept:"application/json","Content-Type":"application/json"},
-        body: JSON.stringify({
-          UserId:3,
-          date: new Date(),
-          qty: quantity,
-          ProductId:data.cartItem.ProductId
-        }),
-      });
-      if(!response.ok){
-          throw new Error(`Response status: ${response.status}`);
-      }
-      const json = await response.json();
-      return json;
-  
-      }catch(error){
-          console.error(error.message);
-      }
+const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json"}
+
+export const ordersFetch = createAsyncThunk("orders/ordersFetch", async () => {
+    try {
+        const user=JSON.parse(localStorage.getItem("token"));//MODIFICAR CON LO DEL AUTH
+        
+        const { data } = await axios.get("http://localhost:3000/api/orders/"+ user.id, //modificar una vez se pueda enviar el id de otra manera
+            {
+                headers: headers                
+            }
+            );
+        console.log(data);
+        return data;
+    } catch (error) {
+            console.error(error.name+" on GET all orders: "+error.message+" "+error.code);
+    }
+})
+    
+
+    
+export const createOrder = createAsyncThunk("order/createOrder", async (formData) => {
+    try {
+        const user=JSON.parse(localStorage.getItem("token"));//MODIFICAR CON LO DEL AUTH
+        console.log(formData);
+        const { data } = await axios.post("http://localhost:3000/api/orders",
+            {
+              UserId: user.id,
+              address1: formData.address1,
+              address2: formData.address2,
+              province: formData.province,
+              city: formData.city,
+              country: formData.country
+            },
+            {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              }                  
+            }
+          );
+        console.log(data);
+        return data;
+    } catch (error) {
+          console.error(error.name+" on addItem cart: "+error.message+" "+error.code);
+    }
 })
 
 
 const OrderSlice = createSlice({
-    name: 'order',
+    name: 'orders',
     initialState: {
         isLoading: false,
-        OrderItems: [],
-        total:0,
+        Orders: [],
         error: null
     },
     reducers:{},
     extraReducers: (builder) => {
-        //Cart
-        builder.addCase(cartFetch.pending, (state, action) => {
+        //Get Orders from User
+        builder.addCase(ordersFetch.pending, (state, action) => {
         state.isLoading = true;
         state.error = null;
         });
-        builder.addCase(cartFetch.fulfilled, (state, action) => {
+        builder.addCase(ordersFetch.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.CartItems = action.payload.CartItems;
-        state.total = action.payload.total;
+        state.Orders = action.payload;
         state.error = null;
         });
-        builder.addCase(cartFetch.rejected, (state, action) => {
+        builder.addCase(ordersFetch.rejected, (state, action) => {
         state.isLoading = false;
-        state.CartItems = [];
+        state.Orders = [];
         state.error = action.error.message;
         });
     },
 });
 
-export default OrderSlice
+export default OrderSlice.reducer;

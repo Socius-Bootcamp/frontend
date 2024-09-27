@@ -5,6 +5,9 @@ import TopNavbar from "../../Components/Header/TopNavbar";
 import Footer from "../../Components/Footer/Footer";
 import './Login.css'; 
 import axios from 'axios'; 
+import store from "../../Store";
+import { cartFetch } from "../../Features/Cart/CartSlice";
+import { ordersFetch } from "../../Features/Order/OrderSlice";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -22,10 +25,21 @@ const Login = () => {
       });
 
       // Guarda el token en el almacenamiento local
-      localStorage.setItem('token', response.data.token);
+      console.log(JSON.stringify(response.data))
+      localStorage.setItem('token', JSON.stringify(response.data));
+      //se va a obtener el carrito y las ordenes al DB
+      store.dispatch(cartFetch()).catch((error) => {
+        console.log("No connection to cart on DB, "+error.message); 
+      });
+      store.dispatch(ordersFetch()).catch((error) => {
+        console.log("No connection to cart on DB, "+error.message);
+      });
+      const user=localStorage.getItem('token');
+      console.log(user);
       navigate('/home'); // Redirige al home
 
     } catch (error) {
+      console.log(error.message)
       alert('Credenciales incorrectas');
     }
   };
