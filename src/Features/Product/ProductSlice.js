@@ -8,7 +8,7 @@ export const productsFetch = createAsyncThunk(
           const { data } = await axios.get('http://localhost:3000/api/products');
           return data;
         } catch (error) {
-          console.error(error);
+          console.error(error.name+" on GET products: "+error.message+" "+error.code);
         }
     }
 )

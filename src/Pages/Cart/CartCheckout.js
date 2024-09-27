@@ -4,8 +4,6 @@ import { Card } from 'react-bootstrap';
 import TopNavbar from '../../Components/Header/TopNavbar';
 import Footer from '../../Components/Footer/Footer';
 import CartCheckoutForm from '../../Components/Cart/CartCheckoutForm';
-import CartCheckouts from '../../Components/Cart/CartItemCheck';
-import CartItemCard from '../../Components/Cart/CartItemCard';
 import CartItemCheck from '../../Components/Cart/CartItemCheck';
 
 const CartCheckout = () => {
@@ -48,7 +46,7 @@ const CartCheckout = () => {
                     <Card>
                         <Card.Body>
                             <Card.Title className='text-center'>Order Shipping Data</Card.Title>
-                            <CartCheckoutForm  />                       
+                            <CartCheckoutForm />                       
                             </Card.Body>
                     </Card>
                 </div>

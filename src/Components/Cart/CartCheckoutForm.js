@@ -1,8 +1,12 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { createOrder } from '../../Features/Order/OrderSlice';
 
-const CartCheckoutForm = ({ onSubmit, initialData }) => {
+const CartCheckoutForm = () => {
     const cart= useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+    const user=JSON.parse(localStorage.getItem("token"));
     const [formData, setFormData] = useState({
         address1: '',
         address2: '',
@@ -13,29 +17,16 @@ const CartCheckoutForm = ({ onSubmit, initialData }) => {
 
     const [errors, setErrors] = useState({});
 
-    useEffect(() => {
-        if (initialData) {
-            setFormData({...initialData});
-        } else {
-            setFormData({ 
-                address1: '',
-                address2: '',
-                city: '',
-                province: '',
-                country: '', }); 
-        }
-    }, [initialData]);
-
     const handleChage = (e) => {
-        const {name, value, files} = e.target;
-
+        const {name, value} = e.target;
+        setFormData({...formData, [name]: value});
+        setErrors({ ...errors, [name]: ''});
     };
 
     const validateForm = () =>{
         const newErrors = {};
         if  (!formData.address1.trim()) newErrors.address1 = 'The street name is mandatory';
         if   (!formData.address2) newErrors.address2 = 'The letter/number is mandatory';
-        if  (!formData.province) newErrors.province = 'The province is mandatory';
         if  (!formData.city) newErrors.city = 'The City is mandatory';
         if   (!formData.country) newErrors.country = 'The country is mandatory';
         
@@ -46,36 +37,28 @@ const CartCheckoutForm = ({ onSubmit, initialData }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!validateForm()) return;
-        
-        // const data = new FormData();
-        // data.append('name', formData.name);
-        // data.append('price', formData.price);
-        // data.append('stock', formData.stock);
-        // data.append('category', formData.category);
-        // if (formData.image){
-        //     data.append('image', formData.image);
-        // }
-        // onSubmit(data);
-        onSubmit({ ...formData, id: 3 || Date.now() });
-
-        fetch('/api/endpoint', {
-            method: 'POST',
-            body: formData,
-        })
-        .then((response) => response.json())
-        .then((data) => {
-          // Handle the response data
-        })
-        .catch((error) => {
-          // Handle any errors
-        });
-        
+        const x= dispatch(createOrder(formData));
+        console.log(x);       
         setFormData({ address1: '', address2: '', province: '', city: '', country: ''});
     };
 
     return (
 
         <form onSubmit={handleSubmit}  data-bs-theme="light" encType='multipart/form-data'>
+            { user && (
+                <div>
+                    <div className="my-2">
+                        <label style={{ textTransform: 'capitalize' }}>To: {user.firstName+" "+user.lastName}</label>        
+                    </div>
+                    <div className="my-2">
+                        <label>Email: {user.email}</label>        
+                    </div>
+                    <div className="my-2">
+                        <label>Phone: {user.phone}</label>        
+                    </div>
+                </div>
+            )}
+            <hr/>
             <div className='my-2'>
                 <label className='form-label' htmlFor='address1'>Street Name</label>
                 <input type="text" id="address1" name="address1" value={formData.address1}  onChange={handleChage} className="form-control" placeholder="Street name of the shipping address"/>
@@ -90,8 +73,7 @@ const CartCheckoutForm = ({ onSubmit, initialData }) => {
 
             <div className='mt-2'>
                 <label className='form-label' htmlFor='province'>Province</label>
-                <input type="text" id="province" name="province" value={formData.province}  onChange={handleChage} className="form-control" placeholder="Province"/>
-                {errors.province && <small className="text-danger">{errors.province}</small>}
+                <input type="text" id="province" name="province" value={formData.province}  onChange={handleChage} className="form-control" placeholder="Province (Not mandatory)"/>
             </div>
 
             <div className='mt-2'>
@@ -108,7 +90,7 @@ const CartCheckoutForm = ({ onSubmit, initialData }) => {
 
             <div className='m-3 text-end'>
                 <button type='submit' className='btn btn-outline-secondary '>
-                    {initialData ? 'Actualizar' : 'Agregar'}
+                    Agregar
                 </button>
             </div>
         </form>
