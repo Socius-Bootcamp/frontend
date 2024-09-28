@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, addQty, minusQty, removeFromCart, removeItem } from '../../Features/Cart/CartSlice';
+import { addItem, addQty, minusQty, removeFromCart, removeItem } from '../../Redux/Cart/CartSlice';
 
 const CartItemCard = ({cartItem}) => {
   let [name, setName] = useState(null);

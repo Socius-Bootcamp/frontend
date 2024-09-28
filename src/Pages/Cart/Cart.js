@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import CartItemCard from '../../Components/Cart/CartItemCard';
-import { clearCart, emptyCart, getTotals } from '../../Features/Cart/CartSlice';
+import { clearCart, emptyCart, getTotals } from '../../Redux/Cart/CartSlice';
 
 const Cart = () => {
     const cart= useSelector((state) => state.cart);

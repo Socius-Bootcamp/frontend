@@ -5,9 +5,11 @@ import TopNavbar from "../../Components/Header/TopNavbar";
 import Footer from "../../Components/Footer/Footer";
 import './Login.css'; 
 import axios from 'axios'; 
-import store from "../../Store";
-import { cartFetch } from "../../Features/Cart/CartSlice";
-import { ordersFetch } from "../../Features/Order/OrderSlice";
+import store from "../../Redux/Store";
+import { cartFetch } from "../../Redux/Cart/CartSlice";
+import { userOrdersFetch } from "../../Redux/Order/OrderSlice";
+import { productsFetch } from "../../Redux/Product/ProductSlice";
+import { categoriesFetch } from "../../Redux/Category/CategorySlice";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -31,9 +33,16 @@ const Login = () => {
       store.dispatch(cartFetch()).catch((error) => {
         console.log("No connection to cart on DB, "+error.message); 
       });
-      store.dispatch(ordersFetch()).catch((error) => {
+      store.dispatch(userOrdersFetch()).catch((error) => {
         console.log("No connection to cart on DB, "+error.message);
       });
+      //Se va a obtener los productos y las categorias
+      store.dispatch(productsFetch()).catch((error) => {
+        console.log("No connection to products on DB, "+error.message);
+      })
+      store.dispatch(categoriesFetch()).catch((error) => {
+          console.log("No connection to categories on DB, "+error.message);
+      }) ;
       const user=localStorage.getItem('token');
       console.log(user);
       navigate('/home'); // Redirige al home

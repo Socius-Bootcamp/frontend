@@ -5,7 +5,7 @@ import TopNavbar from '../../../Components/Header/TopNavbar';
 import { Button, Col, Container, Image, Row } from 'react-bootstrap';
 import Footer from '../../../Components/Footer/Footer';
 import './ProductDetails.css'
-import { addItem, addToCart } from '../../../Features/Cart/CartSlice';
+import { addItem, addToCart } from '../../../Redux/Cart/CartSlice';
 
 const categories = [
     { id: 1, name: "Urban" },

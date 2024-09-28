@@ -7,7 +7,6 @@ import ProductCard from "../../Components/Product/Card/ProductCard";
 
 const Products = () => {
   const { products } = useSelector((state) => state.products);
-  console.log(products);
   return (
     <Fragment>
       <TopNavbar />

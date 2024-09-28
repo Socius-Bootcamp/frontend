@@ -29,7 +29,6 @@ const OrderDetail = () => {
     const orderId = parseInt(id);
     const user=JSON.parse(localStorage.getItem("token"));
     const {products} = useSelector((state) => state.products);
-    console.log(products);
     const order = orders.Orders.find(order => order.id === orderId);
     
     if (!order) {
@@ -47,19 +46,25 @@ const OrderDetail = () => {
         <div>
             <div>
                 <TopNavbar />
-                <h1 className="m-4 text-center">Detalle de la Orden N° {order.id}</h1>
+                <h1 className="m-4 text-center">Order N°{order.id} details</h1>
                 <div className="d-flex justify-content-start m-2">
                     {user ? (
                     <Card className="m-2" style={{ width: '18rem' }}>
                         <Card.Body>
-                        <Card.Title className="text-center">Información del Usuario</Card.Title>
+                        <Card.Title className="text-center">Order information</Card.Title>
                         <hr></hr>
                         <Card.Text>
-                            <strong>Nombre:</strong> {user.firstName} {user.lastName}
+                            <strong>Status:</strong> {order.status}
                             <br />
-                            <strong>Email:</strong> {user.email}
+                            <strong>Street:</strong> {order.address1}
                             <br />
-                            <strong>Phone:</strong> {user.phone}
+                            <strong>Number/Letter:</strong> {order.address2}
+                            <br />
+                            <strong>Province:</strong> {order.province}
+                            <br />
+                            <strong>City:</strong> {order.city}
+                            <br />
+                            <strong>Country:</strong> {order.country}
                         </Card.Text>
                         </Card.Body>
                     </Card>
@@ -72,15 +77,15 @@ const OrderDetail = () => {
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                <th>Producto</th>
-                                <th>Nombre</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
+                                <th>Product</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
                                 <th>Total</th>
                                 </tr>
                             </thead>
                         <tbody>
-                            {order.OrderItems.map((item) => (
+                            {order.OrderItems && order.OrderItems.map((item) => (
                             <tr key={item.id}>
                                 <td>
                                 <img src={`../img/products/${products.find(p=> p.id === item.id).image}`} alt={item.name} width="100" />
@@ -94,7 +99,7 @@ const OrderDetail = () => {
                         </tbody>
                         </Table>
                         <div className="d-flex justify-content-end mt-4">
-                            <h5>Total de la orden: ${order.total}</h5>
+                            <h5>Order Total: ${order.total}</h5>
                         </div>
                     </Card.Body>
                     </Card>
