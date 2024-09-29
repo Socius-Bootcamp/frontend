@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from 'react-router-dom'; 
 
-import { Card, Button, Table } from 'react-bootstrap';
+import { Card, Table } from 'react-bootstrap';
 
 import TopNavbar from "../../Components/Header/TopNavbar";
 import Footer from "../../Components/Footer/Footer";
@@ -35,12 +35,8 @@ const OrderDetail = () => {
         return <div>Orden no encontrada</div>;
     }
 
-
-
     //const items = orderItems.filter(item => item.orderId === orderId);
     //const user = users.find(user =>user.id ===  order.userId);
-
-    
 
     return(
         <div>
@@ -55,6 +51,8 @@ const OrderDetail = () => {
                         <hr></hr>
                         <Card.Text>
                             <strong>Status:</strong> {order.status}
+                            <br />
+                            <strong>Date:</strong> {order.date.slice(0, 16).replace('T', ' ')}
                             <br />
                             <strong>Street:</strong> {order.address1}
                             <br />

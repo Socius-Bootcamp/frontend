@@ -1,9 +1,11 @@
 import React from 'react';
 
 import { Table, Button } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
 const ShoeList = ({ shoes, onEdit, onDelete }) => {
-    
+    const { categories }= useSelector((state) => state.categories);
+
 
     return (
         // <div>
@@ -35,7 +37,7 @@ const ShoeList = ({ shoes, onEdit, onDelete }) => {
                                 <td>{shoe.name}</td>
                                 <td>{shoe.price}</td>
                                 <td>{shoe.stock}</td>
-                                <td>{shoe.category}</td>
+                                <td>{categories.find(c => (c.id === shoe.CategoryId)).name}</td>
                                 <td className='text-center'>
                                     <Button 
                                         variant="outline-warning" 
