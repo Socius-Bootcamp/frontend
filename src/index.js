@@ -6,37 +6,23 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import Store from "./Store";
-import { productsFetch } from "./Features/Product/ProductSlice";
-import { categoriesFetch } from "./Features/Category/CategorySlice";
-import { cartFetch } from "./Features/Cart/CartSlice";
-import { ordersFetch } from "./Features/Order/OrderSlice";
-
-Store.dispatch(productsFetch()).catch((error) => {
-    console.log("No connection to products on DB, "+error.message);
-})
-Store.dispatch(categoriesFetch()).catch((error) => {
-    console.log("No connection to categories on DB, "+error.message);
-}) ;
-if ((localStorage.getItem("token"))){
-  Store.dispatch(cartFetch()).catch((error) => {
-    console.log("No connection to cart on DB, "+error.message);
-  });
-  Store.dispatch(ordersFetch()).catch((error) => {
-    console.log("No connection to cart on DB, "+error.message);
-  });
-}
-
+import Store from "./Redux/Store";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const persistor = persistStore(Store);
 
 root.render(
   <React.StrictMode>
-    <Provider store={Store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider> 
+   
+      <Provider store={Store}>
+      <PersistGate persistor={persistor}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+        </PersistGate>
+      </Provider> 
   </React.StrictMode>
 );
 

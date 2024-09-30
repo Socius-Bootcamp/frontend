@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, addQty, minusQty, removeFromCart, removeItem } from '../../Features/Cart/CartSlice';
+import { addItem, removeItem } from '../../Redux/Cart/CartSlice';
 
-const CartItemCard = ({cartItem}) => {
+const CartItemCard = ({cartItem, reportOutOfStock}) => {
   let [name, setName] = useState(null);
   let [price, setPrice] = useState(0);
   let [stock, setStock] = useState(null);
@@ -16,7 +16,8 @@ const CartItemCard = ({cartItem}) => {
     setPrice(result.price);
     setImage(result.image);
     setStock(result.stock);
-  }, [cartItem, products]);
+    reportOutOfStock(result.stock === 0);
+  }, [cartItem, products, reportOutOfStock]);
 
   const handleRemove = (e) => {
     e.preventDefault();
@@ -48,12 +49,14 @@ const CartItemCard = ({cartItem}) => {
 
 
   return (
-    <div className="cart-item" >
+    <div className="cart-item"  >
       <div className="cart-product">
         <img src={`../img/products/${image}`} alt={name} />
         <div>
           <h3>{name}</h3>
-          <p>Stock available: {stock}</p>
+          {stock<1 ? (
+          <p style={{"backgroundColor": "Red","borderRadius": "30px","textAlign": "center"}}>Stock available: {stock}</p>
+          ):<p>Stock available: {stock}</p>}
           <button onClick={handleRemove}>
             Remove
           </button>

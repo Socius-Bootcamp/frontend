@@ -21,6 +21,11 @@ const TopNavbar = ({ hideFullMenu }) => {
   }
   //const { categories } = useSelector((state) => state.categories);
   const cart= useSelector((state) => state.cart);
+
+  const handleLogout = () => {
+    localStorage.clear();
+  };
+
   return (
     <Navbar bg="dark" expand="lg" variant="dark">
       <Container>
@@ -58,20 +63,31 @@ const TopNavbar = ({ hideFullMenu }) => {
             { user.admin &&  (
               <NavDropdown title="Administration" id="basic-nav-dropdown">
                 <Link to="/shoes" className="text-capitalize dropdown-item">
-                Administrar Productos
+                  Administrar Productos
                 </Link>
                 <Link to="/orders" className="text-capitalize dropdown-item">
                   Administrar Ordenes
                 </Link>
+                <Link to="/" onClick={handleLogout} className="text-capitalize dropdown-item">
+                    Log Out
+                </Link>
               </NavDropdown>       
             )}
-            
-            <NavLink to="/Cart" className="nav-link">
-                Cart ({cart.CartItems.length})
-            </NavLink>
-            <NavLink to="/Profile" className="nav-link">
-                User
-            </NavLink>
+            {!user.admin && (
+              <>
+              <NavLink to="/Cart" className="nav-link">
+                  Cart ({cart.CartItems.length})
+              </NavLink>
+              <NavDropdown title="User" id="basic-nav-dropdown">
+                  <Link to="/Profile" className="text-capitalize dropdown-item">
+                      Profile
+                  </Link>
+                  <Link to="/" onClick={handleLogout} className="text-capitalize dropdown-item">
+                      Log Out
+                  </Link>
+                </NavDropdown>   
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
         )};

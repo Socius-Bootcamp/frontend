@@ -1,15 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Footer from '../../Components/Footer/Footer';
 import TopNavbar from '../../Components/Header/TopNavbar';
 import { Button, Card, Table } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import store from '../../Redux/Store';
+import { userOrdersFetch } from '../../Redux/Order/OrderSlice';
 
 const UserProfile = () => {
     const orders= useSelector((state) => state.orders);
     const user=JSON.parse(localStorage.getItem("token"));
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
+    useEffect(() => {
+        store.dispatch(userOrdersFetch()).catch((error) => {
+            console.log("No connection to cart on DB, "+error.message);
+        });
+      }, [dispatch]);
+    
     const handleShowDetail = (id) => {
         navigate(`/order/${id}`);
     }

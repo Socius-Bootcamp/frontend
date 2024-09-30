@@ -5,7 +5,7 @@ import TopNavbar from '../../../Components/Header/TopNavbar';
 import { Button, Col, Container, Image, Row } from 'react-bootstrap';
 import Footer from '../../../Components/Footer/Footer';
 import './ProductDetails.css'
-import { addItem, addToCart } from '../../../Features/Cart/CartSlice';
+import { addItem, addToCart } from '../../../Redux/Cart/CartSlice';
 
 const categories = [
     { id: 1, name: "Urban" },
@@ -41,10 +41,12 @@ const ProductDetails = () => {
     //use effect function to find the product from all products and get the category name
     useEffect(() => {
       let result = products.find((p) => p.id === parseInt(id));
-      setProduct(result);
-      console.log(result);
-      let category =(categories.find((element) => element.id === result.CategoryId)).name
-      setCategory(category);
+      if(result){
+        setProduct(result);
+        let category =(categories.find((element) => element.id === result.CategoryId)).name
+        setCategory(category);
+      }
+      
     }, [id, products, categories]);
   
     //create the item object to just save the necessary data
@@ -66,7 +68,7 @@ const ProductDetails = () => {
     <Fragment>
     <TopNavbar />
     <Container>
-      {product && (
+      {product ? (
         <Row className="my-5">
           <Col  md={6} sm={12}>
             <div className="img-container p-3">
@@ -87,7 +89,12 @@ const ProductDetails = () => {
               </h4>
               <h4 className="py-2">Price: ${product.price}</h4>
               <p>Available  Stock: {product.stock}</p>
-              <div className="d-flex mb-3">
+              
+                {product.stock<1 ?(
+                  <h3>Out of stock</h3>
+                ):(
+                <>      
+                <div className="d-flex mb-3">         
                 <Button
                   className="btn btn-sm btn-dark fs-6 me-3 text-center"
                   onClick={decreaseQty}
@@ -107,17 +114,27 @@ const ProductDetails = () => {
                 >
                   +
                 </Button>
-              </div>
-              <div className="">
-                <Button variant="dark" className="me-2"
-                  onClick={handleAddToCart}
-                >
-                  Add To Cart
-                </Button>
-              </div>
+                </div>
+                <div className="">
+                  <Button variant="dark" className="me-2"
+                    onClick={handleAddToCart}
+                  >
+                    Add To Cart
+                  </Button>
+                </div>
+                </>
+              )}
+              
             </div>
           </Col>
         </Row>
+      ) : (
+        <div className="m-auto w-100 text-center my-5">
+          <h1 className="text-danger">(0o0) Product Not Found</h1>
+          <Link to="/Home" className="text-dark text-decoration-none fs-5">
+            Return to Home Page
+          </Link>
+        </div>
       )}
     </Container>
     <Footer />

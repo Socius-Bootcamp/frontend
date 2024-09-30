@@ -1,9 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
 const ShoeList = ({ shoes, onEdit, onDelete }) => {
-    
+    const { categories }= useSelector((state) => state.categories);
+    const [shoe,setShoe] =useState();
+
+    //Modal 
+    const [show, setShow] = useState(false);
+    const handleClose = () =>setShow(false);
+    const handleShow = (shoe) => {
+        setShoe(shoe);
+        setShow(true);
+    }
+    const handleConfirm = (e) =>{
+        e.preventDefault();
+        onDelete(shoe.id)
+        handleClose();
+    }
 
     return (
         // <div>
@@ -17,6 +32,7 @@ const ShoeList = ({ shoes, onEdit, onDelete }) => {
         //         ))}
         //     </ul>
         // </div>
+        <>
         <div className='mt-3'>
             <Table striped bordered hover>
                 <thead>
@@ -35,7 +51,7 @@ const ShoeList = ({ shoes, onEdit, onDelete }) => {
                                 <td>{shoe.name}</td>
                                 <td>{shoe.price}</td>
                                 <td>{shoe.stock}</td>
-                                <td>{shoe.category}</td>
+                                <td>{categories.find(c => (c.id === shoe.CategoryId)).name}</td>
                                 <td className='text-center'>
                                     <Button 
                                         variant="outline-warning" 
@@ -45,7 +61,7 @@ const ShoeList = ({ shoes, onEdit, onDelete }) => {
                                     </Button>
                                     <Button 
                                         variant="outline-danger" 
-                                        onClick={() => onDelete(shoe.id)}
+                                        onClick={() => handleShow(shoe)}
                                         className='ms-2'
                                     >
                                         Borrar
@@ -61,6 +77,28 @@ const ShoeList = ({ shoes, onEdit, onDelete }) => {
                 </tbody>
             </Table>
         </div>
+        <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+            <Modal.Header closeButton>
+            <Modal.Title>Confirm DELETE</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            <b>Are you sure about making this changes?</b>
+            <br/>
+            *If the item is already on a confirmed Order instead of deleting the item, the stock will be set to 0.
+            </Modal.Body>
+            <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+                Cancel
+            </Button>
+            <Button variant="primary" onClick={handleConfirm}>Yes, I understand</Button>
+            </Modal.Footer>
+        </Modal>
+        </>
     );
 };
 

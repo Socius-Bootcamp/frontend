@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from 'react-router-dom'; 
 
-import { Card, Button, Table } from 'react-bootstrap';
+import { Card, Table } from 'react-bootstrap';
 
 import TopNavbar from "../../Components/Header/TopNavbar";
 import Footer from "../../Components/Footer/Footer";
@@ -29,37 +29,40 @@ const OrderDetail = () => {
     const orderId = parseInt(id);
     const user=JSON.parse(localStorage.getItem("token"));
     const {products} = useSelector((state) => state.products);
-    console.log(products);
     const order = orders.Orders.find(order => order.id === orderId);
     
     if (!order) {
         return <div>Orden no encontrada</div>;
     }
 
-
-
     //const items = orderItems.filter(item => item.orderId === orderId);
     //const user = users.find(user =>user.id ===  order.userId);
-
-    
 
     return(
         <div>
             <div>
                 <TopNavbar />
-                <h1 className="m-4 text-center">Detalle de la Orden N° {order.id}</h1>
+                <h1 className="m-4 text-center">Order N°{order.id} details</h1>
                 <div className="d-flex justify-content-start m-2">
                     {user ? (
                     <Card className="m-2" style={{ width: '18rem' }}>
                         <Card.Body>
-                        <Card.Title className="text-center">Información del Usuario</Card.Title>
+                        <Card.Title className="text-center">Order information</Card.Title>
                         <hr></hr>
                         <Card.Text>
-                            <strong>Nombre:</strong> {user.firstName} {user.lastName}
+                            <strong>Status:</strong> {order.status}
                             <br />
-                            <strong>Email:</strong> {user.email}
+                            <strong>Date:</strong> {order.date.slice(0, 16).replace('T', ' ')}
                             <br />
-                            <strong>Phone:</strong> {user.phone}
+                            <strong>Street:</strong> {order.address1}
+                            <br />
+                            <strong>Number/Letter:</strong> {order.address2}
+                            <br />
+                            <strong>Province:</strong> {order.province}
+                            <br />
+                            <strong>City:</strong> {order.city}
+                            <br />
+                            <strong>Country:</strong> {order.country}
                         </Card.Text>
                         </Card.Body>
                     </Card>
@@ -72,20 +75,20 @@ const OrderDetail = () => {
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                <th>Producto</th>
-                                <th>Nombre</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
+                                <th>Product</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
                                 <th>Total</th>
                                 </tr>
                             </thead>
                         <tbody>
-                            {order.OrderItems.map((item) => (
+                            {order.OrderItems && order.OrderItems.map((item) => (
                             <tr key={item.id}>
                                 <td>
-                                <img src={`../img/products/${products.find(p=> p.id === item.id).image}`} alt={item.name} width="100" />
+                                <img src={`../img/products/${products.find(p=> p.id === item.ProductId).image}`} alt={item.name} width="100" />
                                 </td>
-                                <td>{products.find(p=> p.id === item.id).name}</td>
+                                <td>{products.find(p=> p.id === item.ProductId).name}</td>
                                 <td>{item.qty}</td>
                                 <td>${item.price}</td>
                                 <td>${(item.qty * item.price)}</td>
@@ -94,7 +97,7 @@ const OrderDetail = () => {
                         </tbody>
                         </Table>
                         <div className="d-flex justify-content-end mt-4">
-                            <h5>Total de la orden: ${order.total}</h5>
+                            <h5>Order Total: ${order.total}</h5>
                         </div>
                     </Card.Body>
                     </Card>
