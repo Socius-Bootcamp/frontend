@@ -1,86 +1,60 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 
 const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",
-}
+};
 
 export const cartFetch = createAsyncThunk("cart/cartFetch", async () => {
   try {
-    const user=JSON.parse(localStorage.getItem("token"));//MODIFICAR CON LO DEL AUTH
-    console.log(user);
-    console.log(user.id);
-    const { data } = await axios.get("http://localhost:3000/api/cart/" + user.id); //modificar una vez se pueda enviar el id de otra manera
+    const {data} = await axios.get("http://localhost:3000/api/cart"); //modificar una vez se pueda enviar el id de otra manera
     return data;
   } catch (error) {
-    console.error(error.name+" on GET cart: "+error.message+" "+error.code);
+    console.error(error.name + " on GET cart: " + error.message + " " + error.code);
   }
 });
 
 export const addItem = createAsyncThunk("cart/addItem", async (info) => {
   try {
-    const user=JSON.parse(localStorage.getItem("token")); //MODIFICAR
     let quantity = info.cartItem.qty;
     if (info.mode === "plus") {
       quantity += 1;
     } else if (info.mode === "minus") {
       quantity -= 1;
     }
-    const { data } = await axios.post("http://localhost:3000/api/cart/",
-      {
-        UserId: user.id,
-        qty: quantity,
-        ProductId: info.cartItem.ProductId,
-      },
-      {
-        headers: headers
-      }
-    );
+    const {data} = await axios.post("http://localhost:3000/api/cart/", {
+      qty: quantity,
+      ProductId: info.cartItem.ProductId,
+    });
     return data;
   } catch (error) {
-    console.error(error.name+" on addItem cart: "+error.message+" "+error.code);
+    console.error(error.name + " on addItem cart: " + error.message + " " + error.code);
   }
 });
 
 export const emptyCart = createAsyncThunk("cart/emptyCart", async (data) => {
   try {
-    const user=JSON.parse(localStorage.getItem("token")); //MODIFICAR
-    const { data } = await axios.put("http://localhost:3000/api/cart/clear",
-      {
-        UserId: user.id,
-      },
-      {
-      headers: headers
-      }
-    );
+    const {data} = await axios.put("http://localhost:3000/api/cart/clear");
     return data;
   } catch (error) {
-    console.error(error.name+" on empty cart: "+error.message+" "+error.code);
+    console.error(error.name + " on empty cart: " + error.message + " " + error.code);
   }
 });
 
-export const removeItem = createAsyncThunk(
-  "cart/removeItem",
-  async (cartItem) => {
-    try {
-      const user=JSON.parse(localStorage.getItem("token")); //MODIFICAR
-      //since axios DELETE  only accepts 2 parameters, we has to only give the URL and a {} of the headers and data.
-      const { data } = await axios.delete("http://localhost:3000/api/cart", 
-        {
-          headers: headers,
-          data:{
-            UserId: user.id,
-            ProductId: cartItem.ProductId
-          }
-        }
-      );
-      return data;
-    } catch (error) {
-      console.error(error.name+" on removeItem cart: "+error.message+" "+error.code);
-    }
+export const removeItem = createAsyncThunk("cart/removeItem", async (cartItem) => {
+  try {
+    //since axios DELETE  only accepts 2 parameters, we has to only give the URL and a {} of the headers and data.
+    const {data} = await axios.delete("http://localhost:3000/api/cart", {
+      data: {
+        ProductId: cartItem.ProductId,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error(error.name + " on removeItem cart: " + error.message + " " + error.code);
   }
-);
+});
 
 const CartSlice = createSlice({
   name: "cart",
@@ -99,9 +73,7 @@ const CartSlice = createSlice({
         state.total += action.payload.price * action.payload.qty;
       } else {
         //if it has items then we check is the item is already on it or not
-        const existingItem = state.CartItems.find(
-          (item) => item.ProductId === action.payload.ProductId
-        );
+        const existingItem = state.CartItems.find((item) => item.ProductId === action.payload.ProductId);
         if (existingItem) {
           // if is already on the cart then we update the values
           let updatedCart = state.CartItems.map((item) => {
@@ -123,9 +95,7 @@ const CartSlice = createSlice({
       }
     },
     addQty: (state, action) => {
-      const existingItem = state.CartItems.find(
-        (item) => item.ProductId === action.payload.ProductId
-      );
+      const existingItem = state.CartItems.find((item) => item.ProductId === action.payload.ProductId);
       //if item quantity greater than 1 then increase the quantity by 1
       if (existingItem.qty >= 1) {
         state.CartItems = state.CartItems.map((item) => {
@@ -137,9 +107,7 @@ const CartSlice = createSlice({
       }
     },
     minusQty: (state, action) => {
-      const existingItem = state.CartItems.find(
-        (item) => item.ProductId === action.payload.ProductId
-      );
+      const existingItem = state.CartItems.find((item) => item.ProductId === action.payload.ProductId);
       //if item quantity greater than 2 then we minus the qty by 1
       if (existingItem.qty >= 2) {
         state.CartItems = state.CartItems.map((item) => {
@@ -153,9 +121,7 @@ const CartSlice = createSlice({
     removeFromCart(state, action) {
       state.CartItems.map((cartItem) => {
         if (cartItem.ProductId === action.payload.ProductId) {
-          const nextCartItems = state.CartItems.filter(
-            (item) => item.ProductId !== cartItem.ProductId
-          );
+          const nextCartItems = state.CartItems.filter((item) => item.ProductId !== cartItem.ProductId);
 
           state.CartItems = nextCartItems;
         }
@@ -163,9 +129,9 @@ const CartSlice = createSlice({
       });
     },
     getTotals(state, action) {
-      let { total } = state.CartItems.reduce(
+      let {total} = state.CartItems.reduce(
         (cartTotal, cartItem) => {
-          const { price, qty } = cartItem;
+          const {price, qty} = cartItem;
           const itemTotal = price * qty;
 
           cartTotal.total += itemTotal;
@@ -255,13 +221,6 @@ const CartSlice = createSlice({
   },
 });
 
-export const {
-  addToCart,
-  getTotals,
-  removeFromCart,
-  clearCart,
-  addQty,
-  minusQty,
-} = CartSlice.actions;
+export const {addToCart, getTotals, removeFromCart, clearCart, addQty, minusQty} = CartSlice.actions;
 
 export default CartSlice.reducer;

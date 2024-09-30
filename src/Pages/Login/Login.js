@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from "react";
-import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';  
+import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import TopNavbar from "../../Components/Header/TopNavbar";
 import Footer from "../../Components/Footer/Footer";
-import './Login.css'; 
-import axios from 'axios'; 
+import "./Login.css";
+import axios from "axios";
 import store from "../../Redux/Store";
 import { cartFetch } from "../../Redux/Cart/CartSlice";
 import { userOrdersFetch } from "../../Redux/Order/OrderSlice";
@@ -12,8 +12,8 @@ import { productsFetch } from "../../Redux/Product/ProductSlice";
 import { categoriesFetch } from "../../Redux/Category/CategorySlice";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -21,41 +21,39 @@ const Login = () => {
 
     try {
       // Realiza la solicitud de inicio de sesión
-      const response = await axios.post('http://localhost:3000/api/auth/login', {
+      const response = await axios.post("http://localhost:3000/api/auth/login", {
         email,
-        password
+        password,
       });
 
       // Guarda el token en el almacenamiento local
-      console.log(JSON.stringify(response.data))
-      localStorage.setItem('token', JSON.stringify(response.data));
+      console.log(JSON.stringify(response.data));
       //se va a obtener el carrito y las ordenes al DB
       store.dispatch(cartFetch()).catch((error) => {
-        console.log("No connection to cart on DB, "+error.message); 
+        console.log("No connection to cart on DB, " + error.message);
       });
       store.dispatch(userOrdersFetch()).catch((error) => {
-        console.log("No connection to cart on DB, "+error.message);
+        console.log("No connection to cart on DB, " + error.message);
       });
       //Se va a obtener los productos y las categorias
       store.dispatch(productsFetch()).catch((error) => {
-        console.log("No connection to products on DB, "+error.message);
-      })
+        console.log("No connection to products on DB, " + error.message);
+      });
       store.dispatch(categoriesFetch()).catch((error) => {
-          console.log("No connection to categories on DB, "+error.message);
-      }) ;
-      const user=localStorage.getItem('token');
+        console.log("No connection to categories on DB, " + error.message);
+      });
+      const user = localStorage.getItem("token");
       console.log(user);
-      navigate('/home'); // Redirige al home
-
+      navigate("/home"); // Redirige al home
     } catch (error) {
-      console.log(error.message)
-      alert('Credenciales incorrectas');
+      console.log(error.message);
+      alert("Credenciales incorrectas");
     }
   };
 
   return (
     <Fragment>
-      <TopNavbar hideFullMenu={true} />  
+      <TopNavbar hideFullMenu={true} />
       <div className="login-container">
         <Container fluid>
           <Row className="w-100">
@@ -85,11 +83,7 @@ const Login = () => {
                         required
                       />
                     </Form.Group>
-                    <Button
-                      type="submit"
-                      className="w-100 mt-4"
-                      style={{ backgroundColor: '#a21cff', border: 'none' }}
-                    >
+                    <Button type="submit" className="w-100 mt-4" style={{ backgroundColor: "#a21cff", border: "none" }}>
                       Entrar
                     </Button>
                   </Form>
@@ -98,7 +92,7 @@ const Login = () => {
             </Col>
           </Row>
         </Container>
-        <Footer />  
+        <Footer />
       </div>
     </Fragment>
   );

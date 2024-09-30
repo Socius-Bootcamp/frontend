@@ -5,14 +5,17 @@ import NotFound from "./Pages/NotFound";
 import Products from "./Pages/Products/Products";
 import SpecificCategory from "./Pages/Products/SpecificCategory";
 import ShoeManager from "./Pages/Shoes/ShoeManager";
-import OrderList from './Pages/Orders/OrderList';
-import OrderDetail from './Pages/Orders/OrderDetail';
+import OrderList from "./Pages/Orders/OrderList";
+import OrderDetail from "./Pages/Orders/OrderDetail";
 import Cart from "./Pages/Cart/Cart";
 import ProductDetails from "./Pages/Products/ProductDetails/ProductDetails";
-import './App.css';
+import "./App.css";
 import CartCheckout from "./Pages/Cart/CartCheckout";
 import Login from "./Pages/Login/Login";
 import UserProfile from "./Pages/User/UserProfile";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 function App() {
   return (
@@ -28,8 +31,8 @@ function App() {
         <Route path="/order/:id" element={<OrderDetail />} />
         <Route path="/Product/:id" element={<ProductDetails />} />
         <Route path="/Cart" element={<Cart />} />
-        <Route path="/CartCheckout" element={<CartCheckout />}/>
-        <Route path="/Profile" element={<UserProfile />}/>
+        <Route path="/CartCheckout" element={<CartCheckout />} />
+        <Route path="/Profile" element={<UserProfile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Fragment>
