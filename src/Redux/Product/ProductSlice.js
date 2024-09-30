@@ -143,10 +143,17 @@ const ProductSlice = createSlice({
         });
         builder.addCase(deleteProduct.fulfilled, (state, action) => {
           state.isLoading = false;
-          const index = state.products.findIndex(
-            (product) => product.id === action.payload.id
-          );
-          state.products.splice(index,1);
+          if(action.payload.deleted){
+            const index = state.products.findIndex(
+              (product) => product.id === action.payload.id
+            );
+            state.products.splice(index,1);
+          }else{
+            const index = state.products.findIndex(
+              (product) => product.id === action.payload.product.id
+            );
+            state.products[index] = action.payload.product;
+          }
           state.error = null;
         });
         builder.addCase(deleteProduct.rejected, (state, action) => {

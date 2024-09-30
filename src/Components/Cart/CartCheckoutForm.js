@@ -1,11 +1,10 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { createOrder } from '../../Redux/Order/OrderSlice';
 import { useNavigate } from 'react-router-dom';
+import { emptyCart } from '../../Redux/Cart/CartSlice';
 
 const CartCheckoutForm = () => {
-    const cart= useSelector((state) => state.cart);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user=JSON.parse(localStorage.getItem("token"));
@@ -40,7 +39,8 @@ const CartCheckoutForm = () => {
         e.preventDefault();
         if (!validateForm()) return;
         const x= dispatch(createOrder(formData));
-        console.log(x);       
+        console.log(x);
+        dispatch(emptyCart());
         setFormData({ address1: '', address2: '', province: '', city: '', country: ''});
         navigate('/Profile');
     };

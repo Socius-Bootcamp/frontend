@@ -6,7 +6,7 @@ import "./CategoryCard.css";
 const CategoryCard = ({ category }) => {
   return (
     <Link
-      to={`Category/${category}`}
+      to={`/Category/${category}`}
       className="text-decoration-none text-dark"
     >
       <Card className="custom-card">

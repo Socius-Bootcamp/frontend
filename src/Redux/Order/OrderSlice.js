@@ -133,6 +133,20 @@ const OrderSlice = createSlice({
         state.error = action.error.message;
         });
 
+        //Create order
+        builder.addCase(createOrder.pending, (state, action) => {
+          state.isLoading = true;
+          state.error = null;
+          });
+          builder.addCase(createOrder.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.Orders.push(action.payload);
+          state.error = null;
+          });
+          builder.addCase(createOrder.rejected, (state, action) => {
+          state.isLoading = false;
+          state.error = action.error.message;
+          });
         //Update order
         builder.addCase(updateOrder.pending, (state, action) => {
         state.isLoading = true;

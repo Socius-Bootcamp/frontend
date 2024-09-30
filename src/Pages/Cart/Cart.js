@@ -1,20 +1,33 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import TopNavbar from '../../Components/Header/TopNavbar'
 import Footer from '../../Components/Footer/Footer'
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import CartItemCard from '../../Components/Cart/CartItemCard';
-import { clearCart, emptyCart, getTotals } from '../../Redux/Cart/CartSlice';
+import { cartFetch, clearCart, emptyCart, getTotals } from '../../Redux/Cart/CartSlice';
+import store from '../../Redux/Store';
 
 const Cart = () => {
     const cart= useSelector((state) => state.cart);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [outOfStock, setOutOfStock] = useState(false);
+
+    // Función que recibirá el estado de los hijos sobre si hay un producto sin stock
+    const handleOutOfStock = (isOutOfStock) => {
+      if (isOutOfStock) {
+        setOutOfStock(true);  // Deshabilitará el botón si algún item está sin stock
+      }
+    };
+
+
     
     useEffect(() => {
-      dispatch(getTotals());
-    }, [cart, dispatch]);
+      store.dispatch(cartFetch()).catch((error) => {
+        console.log("No connection to cart on DB, "+error.message); 
+      });
+    }, [dispatch]);
 
     const handleClear = (e) => {
       e.preventDefault();
@@ -53,7 +66,7 @@ const Cart = () => {
                     {cart.CartItems.map((cartItem) =>{
                         return (
                           <div key={cartItem.ProductId}>
-                            <CartItemCard cartItem={cartItem}/>
+                            <CartItemCard cartItem={cartItem} reportOutOfStock={handleOutOfStock}/>
                           </div>
                         )
                     })}
@@ -68,7 +81,13 @@ const Cart = () => {
                 <span className="amount">${cart.total}</span>
               </div>
               <hr/>
+              {outOfStock ? 
+              <>
+              <button disabled style={{"backgroundColor": "gray"}}>Check out</button>
+              <p>Item(s) in your cart have 0 stock to sell, please remove them and refresh</p>
+              </> :
               <button onClick={handleBuy}>Check out</button>
+              }
               <div className="continue-shopping">
                 <Link to="/">
                   <span> Continue Shopping</span>

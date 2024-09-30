@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Button, Modal} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 
@@ -12,7 +13,6 @@ const ShoeForm = ({ onSubmit, initialData }) => {
         CategoryId: '',
         //image: null,
     });
-
     const [errors, setErrors] = useState({});
     //const [imagePreview, setImagePreview] = useState(null);
 
@@ -65,16 +65,34 @@ const ShoeForm = ({ onSubmit, initialData }) => {
         // }
         // onSubmit(data);
         if(initialData){
-            onSubmit({ ...formData, id: initialData?.id});
+            setCreation(false)
+            handleShow();
         }else{
+            setCreation(true)
             onSubmit({ ...formData, image: "default.png"});
+            handleShow();
         }
-        setFormData({ name: '', price: '', stock: '', category: ''/*, image: null*/ });
         //setImagePreview(null);
     };
 
-    return (
+    //Modal 
+    const [creation, setCreation] = useState(true);
+    const [show, setShow] = useState(false);
 
+    const handleClose = () =>{
+        setFormData({ name: '', price: '', stock: '', category: ''/*, image: null*/ });
+        setShow(false);
+    } 
+    const handleShow = () => setShow(true);
+
+    const handleConfirm = (e) =>{
+        e.preventDefault();
+        onSubmit({ ...formData, id: initialData?.id})
+        handleClose();
+    }
+
+    return (
+        <>
         <form onSubmit={handleSubmit} encType='multipart/form-data'>
             { initialData ? (
                 <p>Editing {initialData.name}</p>
@@ -104,7 +122,7 @@ const ShoeForm = ({ onSubmit, initialData }) => {
 
                 {categories ? (
                     categories.map(category =>
-                    (<option value={category.id}>{category.name}</option>)
+                    (<option value={category.id} key={category.id}>{category.name}</option>)
                     )
                 ):  <option value="none">No existing categories</option>
                 }
@@ -124,6 +142,44 @@ const ShoeForm = ({ onSubmit, initialData }) => {
                 </button>
             </div>
         </form>
+         <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+            {creation ? (
+                <>
+                <Modal.Header closeButton>
+                <Modal.Title>Creation success</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                
+
+                Succesfully created product.
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="primary" onClick={handleClose}>Understood</Button>
+                </Modal.Footer>
+                </>
+            ): (
+                <>
+                <Modal.Header closeButton>
+                <Modal.Title>Confirm Update</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                Are you sure about making this changes?
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Cancel
+                </Button>
+                <Button variant="primary" onClick={handleConfirm}>Yes</Button>
+                </Modal.Footer>
+                </>
+            )}
+        </Modal>
+        </>        
     );
 };
 

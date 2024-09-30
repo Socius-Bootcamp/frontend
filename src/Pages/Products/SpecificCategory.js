@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import TopNavbar from "../../Components/Header/TopNavbar";
 import Footer from "../../Components/Footer/Footer";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import ProductCard from "../../Components/Product/Card/ProductCard";
 import { useSelector } from "react-redux";
@@ -32,6 +32,7 @@ import { useSelector } from "react-redux";
 // }];
 
 const SpecificCategory = () => {
+  const [search, setSearch] = useState("");
   const { categories } = useSelector((state) => state.categories);
   const { products } = useSelector((state) => state.products);
   let { SpecificCategory } = useParams();
@@ -53,8 +54,21 @@ const SpecificCategory = () => {
             <span className="text-capitalize">{SpecificCategory}</span>
           </h4>
         </div>
+        <Form>
+          <InputGroup className="my-3">
+            <Form.Control
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by product name"
+            />
+          </InputGroup>
+        </Form>
         <Row>
-          {categoryProducts && categoryProducts.map((product) => {
+          {categoryProducts && categoryProducts
+              .filter((item) => {
+                return search.toLocaleLowerCase() === ""
+                  ? item
+                  : item.name.toLocaleLowerCase().includes(search);
+              }).map((product) => {
               return (
                 <Col
                   xs={12}

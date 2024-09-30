@@ -86,9 +86,9 @@ const OrderDetail = () => {
                             {order.OrderItems && order.OrderItems.map((item) => (
                             <tr key={item.id}>
                                 <td>
-                                <img src={`../img/products/${products.find(p=> p.id === item.id).image}`} alt={item.name} width="100" />
+                                <img src={`../img/products/${products.find(p=> p.id === item.ProductId).image}`} alt={item.name} width="100" />
                                 </td>
-                                <td>{products.find(p=> p.id === item.id).name}</td>
+                                <td>{products.find(p=> p.id === item.ProductId).name}</td>
                                 <td>{item.qty}</td>
                                 <td>${item.price}</td>
                                 <td>${(item.qty * item.price)}</td>
