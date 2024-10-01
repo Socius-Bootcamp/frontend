@@ -5,10 +5,7 @@ import "./CategoryCard.css";
 
 const CategoryCard = ({ category }) => {
   return (
-    <Link
-      to={`/Category/${category}`}
-      className="text-decoration-none text-dark"
-    >
+    <Link to={`/Category/${category}`} className="text-decoration-none text-dark">
       <Card className="custom-card">
         <Card.Body>
           <Card.Text className="text-capitalize">{category}</Card.Text>
