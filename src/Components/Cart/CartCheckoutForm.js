@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createOrder } from "../../Redux/Order/OrderSlice";
 import { useNavigate } from "react-router-dom";
 import { clearCart } from "../../Redux/Cart/CartSlice";
@@ -7,7 +7,7 @@ import { clearCart } from "../../Redux/Cart/CartSlice";
 const CartCheckoutForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("token"));
+  const { user } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     address1: "",
     address2: "",

@@ -13,32 +13,37 @@ import { logUser } from "../../Redux/User/UserSlice";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     // Realiza la solicitud de inicio de sesión
     store
       .dispatch(logUser({ email, password }))
       .unwrap()
       .then(() => {
-        store.dispatch(cartFetch()).catch((error) => {
-          console.log("No connection to cart on DB, " + error.message);
-        });
-        store.dispatch(userOrdersFetch()).catch((error) => {
-          console.log("No connection to cart on DB, " + error.message);
-        });
-        //Se va a obtener los productos y las categorias
-        store.dispatch(productsFetch()).catch((error) => {
-          console.log("No connection to products on DB, " + error.message);
-        });
-        store.dispatch(categoriesFetch()).catch((error) => {
-          console.log("No connection to categories on DB, " + error.message);
-        });
-        navigate("/home");
+        // Crea un array con todas las promesas de dispatch, para obtener y guardar los datos
+        const promises = [
+          store.dispatch(cartFetch()),
+          store.dispatch(userOrdersFetch()),
+          store.dispatch(productsFetch()),
+          store.dispatch(categoriesFetch()),
+        ];
+
+        // Usa Promise.all para esperar a que todas se resuelvan
+        Promise.all(promises)
+          .then(() => {
+            setIsLoading(false);
+            navigate("/home");
+          })
+          .catch((error) => {
+            console.log("Error en alguna de las peticiones, " + error.message);
+          });
       })
       .catch((error) => {
         alert("Credenciales incorrectas");
+        setIsLoading(false);
       });
   };
 
@@ -85,7 +90,7 @@ const Login = () => {
                       />
                     </Form.Group>
                     <Button type="submit" className="w-100 mt-4" style={{ backgroundColor: "#a21cff", border: "none" }}>
-                      Entrar
+                      {isLoading ? "Loading..." : "Entrar"}
                     </Button>
                   </Form>
                 </Card.Body>

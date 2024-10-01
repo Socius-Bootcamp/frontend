@@ -7,9 +7,7 @@ export const logUser = createAsyncThunk("user/logUser", async (info, { rejectWit
       email: info.email,
       password: info.password,
     });
-
     const data = response.data;
-    console.log(data);
     return data;
   } catch (error) {
     console.error(error.name + " on logIn user: " + error.message + " " + error.code);
