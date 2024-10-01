@@ -1,59 +1,65 @@
 import React, { Fragment, useState } from "react";
-import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Card, Navbar, NavLink, Image } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import TopNavbar from "../../Components/Header/TopNavbar";
 import Footer from "../../Components/Footer/Footer";
 import "./Login.css";
-import axios from "axios";
 import store from "../../Redux/Store";
 import { cartFetch } from "../../Redux/Cart/CartSlice";
 import { userOrdersFetch } from "../../Redux/Order/OrderSlice";
 import { productsFetch } from "../../Redux/Product/ProductSlice";
 import { categoriesFetch } from "../../Redux/Category/CategorySlice";
+import { logUser } from "../../Redux/User/UserSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    // Realiza la solicitud de inicio de sesión
+    store
+      .dispatch(logUser({ email, password }))
+      .unwrap()
+      .then(() => {
+        // Crea un array con todas las promesas de dispatch, para obtener y guardar los datos
+        const promises = [
+          store.dispatch(cartFetch()),
+          store.dispatch(userOrdersFetch()),
+          store.dispatch(productsFetch()),
+          store.dispatch(categoriesFetch()),
+        ];
 
-    try {
-      // Realiza la solicitud de inicio de sesión
-      const response = await axios.post("http://localhost:3000/api/auth/login", {
-        email,
-        password,
+        // Usa Promise.all para esperar a que todas se resuelvan
+        Promise.all(promises)
+          .then(() => {
+            setIsLoading(false);
+            navigate("/home");
+          })
+          .catch((error) => {
+            console.log("Error en alguna de las peticiones, " + error.message);
+          });
+      })
+      .catch((error) => {
+        alert("Credenciales incorrectas");
+        setIsLoading(false);
       });
-
-      // Guarda el token en el almacenamiento local
-      console.log(JSON.stringify(response.data));
-      //se va a obtener el carrito y las ordenes al DB
-      store.dispatch(cartFetch()).catch((error) => {
-        console.log("No connection to cart on DB, " + error.message);
-      });
-      store.dispatch(userOrdersFetch()).catch((error) => {
-        console.log("No connection to cart on DB, " + error.message);
-      });
-      //Se va a obtener los productos y las categorias
-      store.dispatch(productsFetch()).catch((error) => {
-        console.log("No connection to products on DB, " + error.message);
-      });
-      store.dispatch(categoriesFetch()).catch((error) => {
-        console.log("No connection to categories on DB, " + error.message);
-      });
-      const user = localStorage.getItem("token");
-      console.log(user);
-      navigate("/home"); // Redirige al home
-    } catch (error) {
-      console.log(error.message);
-      alert("Credenciales incorrectas");
-    }
   };
 
   return (
     <Fragment>
-      <TopNavbar hideFullMenu={true} />
+      <Navbar bg="dark" expand="lg" variant="dark">
+        <Container>
+          <NavLink to="/" className="navbar-brand">
+            <Image
+              src="../img/Nike.png"
+              alt="Logo"
+              style={{ height: "30px" }} // Ajusta la altura del logo según lo necesites
+            />
+          </NavLink>
+        </Container>
+      </Navbar>
       <div className="login-container">
         <Container fluid>
           <Row className="w-100">
@@ -84,7 +90,7 @@ const Login = () => {
                       />
                     </Form.Group>
                     <Button type="submit" className="w-100 mt-4" style={{ backgroundColor: "#a21cff", border: "none" }}>
-                      Entrar
+                      {isLoading ? "Loading..." : "Entrar"}
                     </Button>
                   </Form>
                 </Card.Body>

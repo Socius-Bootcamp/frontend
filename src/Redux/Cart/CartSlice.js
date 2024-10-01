@@ -1,14 +1,9 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const headers = {
-  Accept: "application/json",
-  "Content-Type": "application/json",
-};
 
 export const cartFetch = createAsyncThunk("cart/cartFetch", async () => {
   try {
-    const {data} = await axios.get("http://localhost:3000/api/cart"); //modificar una vez se pueda enviar el id de otra manera
+    const { data } = await axios.get("http://localhost:3000/api/cart");
     return data;
   } catch (error) {
     console.error(error.name + " on GET cart: " + error.message + " " + error.code);
@@ -23,7 +18,7 @@ export const addItem = createAsyncThunk("cart/addItem", async (info) => {
     } else if (info.mode === "minus") {
       quantity -= 1;
     }
-    const {data} = await axios.post("http://localhost:3000/api/cart/", {
+    const { data } = await axios.post("http://localhost:3000/api/cart/", {
       qty: quantity,
       ProductId: info.cartItem.ProductId,
     });
@@ -35,7 +30,7 @@ export const addItem = createAsyncThunk("cart/addItem", async (info) => {
 
 export const emptyCart = createAsyncThunk("cart/emptyCart", async (data) => {
   try {
-    const {data} = await axios.put("http://localhost:3000/api/cart/clear");
+    const { data } = await axios.put("http://localhost:3000/api/cart/clear");
     return data;
   } catch (error) {
     console.error(error.name + " on empty cart: " + error.message + " " + error.code);
@@ -44,8 +39,7 @@ export const emptyCart = createAsyncThunk("cart/emptyCart", async (data) => {
 
 export const removeItem = createAsyncThunk("cart/removeItem", async (cartItem) => {
   try {
-    //since axios DELETE  only accepts 2 parameters, we has to only give the URL and a {} of the headers and data.
-    const {data} = await axios.delete("http://localhost:3000/api/cart", {
+    const { data } = await axios.delete("http://localhost:3000/api/cart", {
       data: {
         ProductId: cartItem.ProductId,
       },
@@ -129,9 +123,9 @@ const CartSlice = createSlice({
       });
     },
     getTotals(state, action) {
-      let {total} = state.CartItems.reduce(
+      let { total } = state.CartItems.reduce(
         (cartTotal, cartItem) => {
-          const {price, qty} = cartItem;
+          const { price, qty } = cartItem;
           const itemTotal = price * qty;
 
           cartTotal.total += itemTotal;
@@ -221,6 +215,6 @@ const CartSlice = createSlice({
   },
 });
 
-export const {addToCart, getTotals, removeFromCart, clearCart, addQty, minusQty} = CartSlice.actions;
+export const { addToCart, getTotals, removeFromCart, clearCart, addQty, minusQty } = CartSlice.actions;
 
 export default CartSlice.reducer;

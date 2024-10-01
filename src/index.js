@@ -15,14 +15,13 @@ const persistor = persistStore(Store);
 
 root.render(
   <React.StrictMode>
-   
-      <Provider store={Store}>
+    <Provider store={Store}>
       <PersistGate persistor={persistor}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-        </PersistGate>
-      </Provider> 
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );
 

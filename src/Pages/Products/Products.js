@@ -15,19 +15,14 @@ const Products = () => {
         <h4 className="mb-4">Showing All Products</h4>
         <Form>
           <InputGroup className="my-3">
-            <Form.Control
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by product name"
-            />
+            <Form.Control onChange={(e) => setSearch(e.target.value)} placeholder="Search by product name" />
           </InputGroup>
         </Form>
         <Row>
           {products &&
             products
               .filter((item) => {
-                return search.toLocaleLowerCase() === ""
-                  ? item
-                  : item.name.toLocaleLowerCase().includes(search);
+                return search.toLocaleLowerCase() === "" ? item : item.name.toLocaleLowerCase().includes(search);
               })
               .map((p) => {
                 return (

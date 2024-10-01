@@ -1,21 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import React from "react";
-
-const headers = {
-  Accept: "application/json",
-  "Content-Type": "application/json",
-};
 
 export const ordersFetch = createAsyncThunk("orders/admin/ordersFetch", async () => {
   try {
-    const { data } = await axios.get(
-      "http://localhost:3000/api/admin/orders/", //modificar una vez se pueda enviar el id de otra manera
-      {
-        headers: headers,
-      }
-    );
-    console.log(data);
+    const { data } = await axios.get("http://localhost:3000/api/admin/orders/");
     return data;
   } catch (error) {
     console.error(error.name + " on GET all orders: " + error.message + " " + error.code);
@@ -24,13 +12,7 @@ export const ordersFetch = createAsyncThunk("orders/admin/ordersFetch", async ()
 
 export const userOrdersFetch = createAsyncThunk("orders/userOrdersFetch", async () => {
   try {
-    const { data } = await axios.get(
-      "http://localhost:3000/api/orders", //modificar una vez se pueda enviar el id de otra manera
-      {
-        headers: headers,
-      }
-    );
-    console.log(data);
+    const { data } = await axios.get("http://localhost:3000/api/orders");
     return data;
   } catch (error) {
     console.error(error.name + " on GET all user orders: " + error.message + " " + error.code);
@@ -39,24 +21,13 @@ export const userOrdersFetch = createAsyncThunk("orders/userOrdersFetch", async 
 
 export const createOrder = createAsyncThunk("order/createOrder", async (formData) => {
   try {
-    const user = JSON.parse(localStorage.getItem("token")); //MODIFICAR CON LO DEL AUTH
-    console.log(formData);
-    const { data } = await axios.post(
-      "http://localhost:3000/api/orders",
-      {
-        address1: formData.address1,
-        address2: formData.address2,
-        province: formData.province,
-        city: formData.city,
-        country: formData.country,
-      },
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const { data } = await axios.post("http://localhost:3000/api/orders", {
+      address1: formData.address1,
+      address2: formData.address2,
+      province: formData.province,
+      city: formData.city,
+      country: formData.country,
+    });
     console.log(data);
     return data;
   } catch (error) {
@@ -66,24 +37,15 @@ export const createOrder = createAsyncThunk("order/createOrder", async (formData
 
 export const updateOrder = createAsyncThunk("order/admin/updateOrder", async (update) => {
   try {
-    const { data } = await axios.put(
-      "http://localhost:3000/api/orders", //MODIFICAR CON LO DEL AUTH
-      {
-        OrderId: update.id,
-        status: update.status,
-        address1: update.address1,
-        address2: update.address2,
-        province: update.province,
-        city: update.city,
-        country: update.country,
-      },
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const { data } = await axios.put("http://localhost:3000/api/orders", {
+      OrderId: update.id,
+      status: update.status,
+      address1: update.address1,
+      address2: update.address2,
+      province: update.province,
+      city: update.city,
+      country: update.country,
+    });
     return data;
   } catch (error) {
     console.error(error.name + " on update Order: " + error.message + " " + error.code);
@@ -158,7 +120,6 @@ const OrderSlice = createSlice({
     });
     builder.addCase(updateOrder.rejected, (state, action) => {
       state.isLoading = false;
-      state.Orders = state.Orders;
       state.error = action.error.message;
     });
   },
