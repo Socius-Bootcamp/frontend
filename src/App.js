@@ -14,6 +14,7 @@ import CartCheckout from "./Pages/Cart/CartCheckout";
 import Login from "./Pages/Login/Login";
 import UserProfile from "./Pages/User/UserProfile";
 import axios from "axios";
+import Register from "./Pages/Register/Register";
 
 axios.defaults.withCredentials = true;
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/Cart" element={<Cart />} />
         <Route path="/CartCheckout" element={<CartCheckout />} />
         <Route path="/Profile" element={<UserProfile />} />
+        <Route path="/Register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Fragment>
