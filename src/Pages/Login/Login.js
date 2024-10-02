@@ -72,6 +72,7 @@ const Login = () => {
                     <Form.Group controlId="formEmail">
                       <Form.Label>Correo</Form.Label>
                       <Form.Control
+                        id="email"
                         type="email"
                         placeholder="Escribe tu correo"
                         value={email}
@@ -82,6 +83,7 @@ const Login = () => {
                     <Form.Group controlId="formPassword" className="mt-3">
                       <Form.Label>Contraseña</Form.Label>
                       <Form.Control
+                        id="password"
                         type="password"
                         placeholder="Escribe tu contraseña"
                         value={password}
@@ -89,7 +91,12 @@ const Login = () => {
                         required
                       />
                     </Form.Group>
-                    <Button type="submit" className="w-100 mt-4" style={{ backgroundColor: "#a21cff", border: "none" }}>
+                    <Button
+                      id="button-login"
+                      type="submit"
+                      className="w-100 mt-4"
+                      style={{ backgroundColor: "#a21cff", border: "none" }}
+                    >
                       {isLoading ? "Loading..." : "Entrar"}
                     </Button>
                   </Form>
