@@ -5,6 +5,7 @@ import TopNavbar from "../../Components/Header/TopNavbar";
 import Footer from "../../Components/Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { ordersFetch, updateOrder } from "../../Redux/Order/OrderSlice";
+import Pagination from "../../Components/Pagination/Pagination";
 
 const OrderList = () => {
   const orders = useSelector((state) => state.orders);
@@ -37,6 +38,14 @@ const OrderList = () => {
     navigate(`/order/${order.id}`);
   };
 
+    //Pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const perPage=10;
+  
+    const lastItemIndex = currentPage * perPage;
+    const firstItemIndex = lastItemIndex - perPage;
+
+
   return (
     <div className="container-fluid p-0" style={{ marginBottom: "3rem" }}>
       <TopNavbar />
@@ -60,7 +69,7 @@ const OrderList = () => {
             </thead>
             <tbody>
               {orders &&
-                orders.Orders.map((order) => (
+                orders.Orders.slice(firstItemIndex,lastItemIndex).map((order) => (
                   <tr key={order.id}>
                     <td className="text-center">{order.id}</td>
                     <td>{order.status}</td>
@@ -90,7 +99,8 @@ const OrderList = () => {
           </Table>
         </Card.Body>
       </Card>
-
+      <Pagination 
+        totalItems={orders.Orders.length} perPage={perPage} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Editar Estado de la Orden N°: {selectedOrder?.id}</Modal.Title>

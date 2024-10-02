@@ -15,16 +15,15 @@ export const logUser = createAsyncThunk("user/logUser", async (info, { rejectWit
   }
 });
 
-export const registerUser = createAsyncThunk('user/registerUser', async (newUser, { rejectWithValue }) => {
-    try {
-      const response = await axios.post("http://localhost:3000/api/auth/register",newUser);
-      return response.data;
-    } catch (error) {
-      console.error(error.name + " on register user: " + error.message + " " + error.code);
-      return rejectWithValue("Error in register user"); 
-    }
+export const registerUser = createAsyncThunk("user/registerUser", async (newUser, { rejectWithValue }) => {
+  try {
+    const response = await axios.post("http://localhost:3000/api/auth/register", newUser);
+    return response.data;
+  } catch (error) {
+    console.error(error.name + " on register user: " + error.message + " " + error.code);
+    return rejectWithValue("Error in register user");
   }
-);
+});
 
 const UserSlice = createSlice({
   name: "user",
@@ -60,17 +59,19 @@ const UserSlice = createSlice({
     });
     //register new user
     builder.addCase(registerUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
+      state.isLoading = true;
+      state.error = null;
+    });
     builder.addCase(registerUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-
-      })
+      state.isLoading = false;
+      state.isLoggedIn = true;
+      state.user = action.payload;
+      state.error = null;
+    });
     builder.addCase(registerUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message;
-      })
+      state.isLoading = false;
+      state.error = action.error.message;
+    });
   },
 });
 
