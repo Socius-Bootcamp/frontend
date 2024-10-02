@@ -1,0 +1,18 @@
+.register-container {
+    height: 100vh;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-image: url('/public/img/Login/Login.jpg'); /* Asegúrate de que la ruta sea correcta */
+    padding-top: 5vh; /* Espacio en la parte superior para el Navbar */
+}
+
+@media (max-width: 576px) {
+    .register-container {
+        padding: 1rem; /* Añadir algo de padding en pantallas pequeñas *?/
+    }
+
+    .login-card {
+        padding: 1.5rem; /* Reducir el padding del card en pantallas pequeñas */
+    }
+}

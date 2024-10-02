@@ -13,7 +13,7 @@
     border-radius: 10px;
     padding: 2rem;
     position: absolute; /* Permite centrarlo en la página */
-    top: 90%; /* Coloca el card en el centro vertical */
+    top: 60%; /* Coloca el card en el centro vertical */
     left: 65%; /* Coloca el card en el centro horizontal */
     transform: translate(-50%, -50%); /* Centra el card perfectamente */
 }

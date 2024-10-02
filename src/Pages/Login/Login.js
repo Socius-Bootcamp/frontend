@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
-import { Form, Button, Container, Row, Col, Card, Navbar, NavLink, Image } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Form, Button, Container, Row, Col, Card, Navbar, Image } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
 import "./Login.css";
 import store from "../../Redux/Store";
@@ -23,7 +23,7 @@ const Login = () => {
       .dispatch(logUser({ email, password }))
       .unwrap()
       .then(() => {
-        // Crea un array con todas las promesas de dispatch, para obtener y guardar los datos
+        // Crea un array con todas las promesas de dispatch, para obtener y guardar los datos en el store
         const promises = [
           store.dispatch(cartFetch()),
           store.dispatch(userOrdersFetch()),
@@ -31,7 +31,7 @@ const Login = () => {
           store.dispatch(categoriesFetch()),
         ];
 
-        // Usa Promise.all para esperar a que todas se resuelvan
+        // Usa Promise.all para esperar a que todas se resuelvan antes de avanzar
         Promise.all(promises)
           .then(() => {
             setIsLoading(false);
@@ -51,13 +51,13 @@ const Login = () => {
     <Fragment>
       <Navbar bg="dark" expand="lg" variant="dark">
         <Container>
-          <NavLink to="/" className="navbar-brand">
+          <Link to="/" className="navbar-brand">
             <Image
               src="../img/Nike.png"
               alt="Logo"
               style={{ height: "30px" }} // Ajusta la altura del logo según lo necesites
             />
-          </NavLink>
+          </Link>
         </Container>
       </Navbar>
       <div className="login-container">
@@ -93,6 +93,10 @@ const Login = () => {
                       {isLoading ? "Loading..." : "Entrar"}
                     </Button>
                   </Form>
+                  <br />
+                  <Link to={"/Register"} style={{ textDecoration: "none" }}>
+                    New? Sign in right now!
+                  </Link>
                 </Card.Body>
               </Card>
             </Col>
