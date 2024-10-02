@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { Table, Button, Modal, Form, InputGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import Pagination from "../Pagination/Pagination";
 
 const ShoeList = ({ shoes, onEdit, onDelete }) => {
   const { categories } = useSelector((state) => state.categories);
@@ -20,6 +21,13 @@ const ShoeList = ({ shoes, onEdit, onDelete }) => {
     onDelete(shoe.id);
     handleClose();
   };
+
+  //Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const perPage = 10;
+
+  const lastItemIndex = currentPage * perPage;
+  const firstItemIndex = lastItemIndex - perPage;
 
   return (
     <>
@@ -45,6 +53,7 @@ const ShoeList = ({ shoes, onEdit, onDelete }) => {
                 .filter((item) => {
                   return search.toLocaleLowerCase() === "" ? item : item.name.toLocaleLowerCase().includes(search);
                 })
+                .slice(firstItemIndex, lastItemIndex)
                 .map((shoe) => (
                   <tr key={shoe.id}>
                     <td>{shoe.name}</td>
@@ -71,6 +80,16 @@ const ShoeList = ({ shoes, onEdit, onDelete }) => {
           </tbody>
         </Table>
       </div>
+      <Pagination
+        totalItems={
+          shoes.filter((item) => {
+            return search.toLocaleLowerCase() === "" ? item : item.name.toLocaleLowerCase().includes(search);
+          }).length
+        }
+        perPage={perPage}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+      />
       <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>Confirm DELETE</Modal.Title>

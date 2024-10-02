@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../Components/Footer/Footer";
 import TopNavbar from "../../Components/Header/TopNavbar";
 import { Button, Card, Table } from "react-bootstrap";
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import store from "../../Redux/Store";
 import { userOrdersFetch } from "../../Redux/Order/OrderSlice";
+import Pagination from "../../Components/Pagination/Pagination";
 
 const UserProfile = () => {
   const orders = useSelector((state) => state.orders);
@@ -22,6 +23,13 @@ const UserProfile = () => {
   const handleShowDetail = (id) => {
     navigate(`/order/${id}`);
   };
+
+  //Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const perPage=6;
+
+  const lastItemIndex = currentPage * perPage;
+  const firstItemIndex = lastItemIndex - perPage;
 
   return (
     <div>
@@ -61,7 +69,7 @@ const UserProfile = () => {
                 </thead>
                 <tbody>
                   {orders &&
-                    orders.Orders.map((item) => (
+                    orders.Orders.slice(firstItemIndex, lastItemIndex).map((item) => (
                       <tr key={item.id}>
                         <td>
                           <Button variant="outline-info" onClick={() => handleShowDetail(item.id)}>
@@ -75,6 +83,12 @@ const UserProfile = () => {
                     ))}
                 </tbody>
               </Table>
+              <Pagination
+                totalItems={orders.Orders.length}
+                perPage={perPage}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+              />
             </Card.Body>
           </Card>
         </div>

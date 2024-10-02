@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Form, Button, Container, Row, Col, Card, Navbar, Image } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Card, Navbar, Image, Spinner } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
 import "./Login.css";
@@ -66,26 +66,26 @@ const Login = () => {
             <Col xs={10} sm={8} md={6} lg={4} className="left-align">
               <Card className="p-4 shadow-lg login-card">
                 <Card.Body>
-                  <h3 className="text-center mb-4">Bienvenidos de nuevo!</h3>
-                  <p className="text-center mb-4">A continuación, ingresa tus datos.</p>
+                  <h3 className="text-center mb-4">Welcome back!</h3>
+                  <p className="text-center mb-4">Please sign in with your account.</p>
                   <Form onSubmit={handleLogin}>
-                    <Form.Group controlId="formEmail">
-                      <Form.Label>Correo</Form.Label>
+                    <Form.Group>
+                      <Form.Label>Email</Form.Label>
                       <Form.Control
                         id="email"
                         type="email"
-                        placeholder="Escribe tu correo"
+                        placeholder="Enter your email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                       />
                     </Form.Group>
-                    <Form.Group controlId="formPassword" className="mt-3">
-                      <Form.Label>Contraseña</Form.Label>
+                    <Form.Group className="mt-3">
+                      <Form.Label>Password</Form.Label>
                       <Form.Control
                         id="password"
                         type="password"
-                        placeholder="Escribe tu contraseña"
+                        placeholder="Enter your password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -97,7 +97,14 @@ const Login = () => {
                       className="w-100 mt-4"
                       style={{ backgroundColor: "#a21cff", border: "none" }}
                     >
-                      {isLoading ? "Loading..." : "Entrar"}
+                      {isLoading ? (
+                        <>
+                          <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                          Loading...
+                        </>
+                      ) : (
+                        "Sign in"
+                      )}
                     </Button>
                   </Form>
                   <br />

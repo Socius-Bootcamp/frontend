@@ -4,10 +4,16 @@ import { useDispatch } from "react-redux";
 import "./Register.css";
 import Footer from "../../Components/Footer/Footer";
 import { registerUser } from "../../Redux/User/UserSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import store from "../../Redux/Store";
+import { cartFetch } from "../../Redux/Cart/CartSlice";
+import { userOrdersFetch } from "../../Redux/Order/OrderSlice";
+import { productsFetch } from "../../Redux/Product/ProductSlice";
+import { categoriesFetch } from "../../Redux/Category/CategorySlice";
 
 const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -17,31 +23,101 @@ const Register = () => {
     password: "",
     password2: "",
   });
+  //error array para almacenar los errores de cada input si es que hay
+  const [errors, setErrors] = useState({});
+
+  //Validacion de los valores en form
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Validación nombre
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = "First name is required!!";
+    } else if (formData.firstName.length < 2) {
+      newErrors.firstName = "First name must be at least 2 characters!!";
+    }
+
+    // Validación apellido
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = "Last name is required!!";
+    } else if (formData.lastName.length < 2) {
+      newErrors.lastName = "Last name must be at least 2 characters!!";
+    }
+
+    // Validación teléfono
+    const phoneRegex = /^\+?[0-9]+$/;
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required!!";
+    } else if (!phoneRegex.test(formData.phone)) {
+      newErrors.phone = "Phone number must only contain digits and/or a plus at the start!!";
+    } else if (formData.phone.length < 10) {
+      newErrors.phone = "Phone number must be at least 10 digits!!";
+    }
+
+    // Validación email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required!!!";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Invalid email format!!";
+    }
+
+    // Validación password
+    if (!formData.password) {
+      newErrors.password = "Password is required!!";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters!!";
+    }
+
+    // Validación para confirmar contraseña
+    if (!formData.password2) {
+      newErrors.password2 = "Please confirm your password!!";
+    } else if (formData.password !== formData.password2) {
+      newErrors.password2 = "Both Passwords do not match!!";
+    }
+
+    return newErrors;
+  };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    if (formData.password === formData.password2) {
+    const validateErrors = validateForm();
+    if (Object.keys(validateErrors).length === 0) {
       dispatch(registerUser(formData))
         .unwrap()
         .then(() => {
           alert("Registration successful");
-          setIsLoading(false);
           setFormData({ firstName: "", lastName: "", phone: "", email: "", password: "", password2: "" });
+          // Crea un array con todas las promesas de dispatch, para obtener y guardar los datos en el store
+          const promises = [
+            store.dispatch(cartFetch()),
+            store.dispatch(userOrdersFetch()),
+            store.dispatch(productsFetch()),
+            store.dispatch(categoriesFetch()),
+          ];
+
+          // Usa Promise.all para esperar a que todas se resuelvan antes de avanzar
+          Promise.all(promises)
+            .then(() => {
+              setIsLoading(false);
+              navigate("/home");
+            })
+            .catch((error) => {
+              console.log("Error en alguna de las peticiones, " + error.message);
+            });
         })
         .catch(() => {
           alert("Account with that email already exists");
           setIsLoading(false);
         });
     } else {
-      alert("Both passwords aren't the same");
+      setErrors(validateErrors);
       setIsLoading(false);
     }
   };
@@ -79,6 +155,7 @@ const Register = () => {
                           required
                         />
                       </Form.Group>
+                      {errors.firstName && <div className="text-danger">{errors.firstName}</div>}
                     </Col>
                     <Col xs={12} md={6}>
                       <Form.Group className="mb-3" id="formLastName">
@@ -92,6 +169,7 @@ const Register = () => {
                           required
                         />
                       </Form.Group>
+                      {errors.lastName && <div className="text-danger">{errors.lastName}</div>}
                     </Col>
                   </Row>
 
@@ -105,6 +183,7 @@ const Register = () => {
                       placeholder="Enter your phone number"
                       required
                     />
+                    {errors.phone && <div className="text-danger">{errors.phone}</div>}
                   </Form.Group>
 
                   <Form.Group className="mb-3" id="formEmail">
@@ -117,6 +196,7 @@ const Register = () => {
                       placeholder="Enter your email"
                       required
                     />
+                    {errors.email && <div className="text-danger">{errors.email}</div>}
                   </Form.Group>
                   <Row>
                     <Col xs={12} md={6}>
@@ -130,6 +210,7 @@ const Register = () => {
                           placeholder="Enter password"
                           required
                         />
+                        {errors.password && <div className="text-danger">{errors.password}</div>}
                       </Form.Group>
                     </Col>
                     <Col xs={12} md={6}>
@@ -143,6 +224,7 @@ const Register = () => {
                           placeholder="Confirm password"
                           required
                         />
+                        {errors.password2 && <div className="text-danger">{errors.password2}</div>}
                       </Form.Group>
                     </Col>
                   </Row>
