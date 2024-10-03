@@ -22,6 +22,7 @@ const Cart = () => {
     }
   };
 
+  //Llamando el store para obtener el cart y productos en caso de que estos sufrieran cambios
   useEffect(() => {
     store.dispatch(productsFetch()).catch((error) => {
       console.log("No connection to cart on DB, " + error.message);

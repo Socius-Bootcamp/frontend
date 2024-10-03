@@ -49,22 +49,22 @@ const OrderList = () => {
   return (
     <div className="container-fluid p-0" style={{ marginBottom: "3rem" }}>
       <TopNavbar />
-      <h1 className="m-4 text-center">Administrador de Órdenes</h1>
+      <h1 className="m-4 text-center">Orders Management</h1>
       <Card className="m-2">
         <Card.Body>
           <Table striped bordered hover className="">
             <thead>
               <tr>
-                <th>N° Orden</th>
-                <th>Estado</th>
+                <th>N° Order</th>
+                <th>State</th>
                 <th>Total</th>
-                <th>Fecha</th>
-                <th>Dirección</th>
-                <th className="d-none d-lg-table-cell">Provincia</th>
-                <th className="d-none d-lg-table-cell">Ciudad</th>
-                <th className="d-none d-lg-table-cell">Pais</th>
-                <th>Usuario</th>
-                <th>Acciones</th>
+                <th>Date</th>
+                <th>Address</th>
+                <th className="d-none d-lg-table-cell">Province</th>
+                <th className="d-none d-lg-table-cell">City</th>
+                <th className="d-none d-lg-table-cell">Country</th>
+                <th>User</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -87,10 +87,10 @@ const OrderList = () => {
                     <td>{order.UserId}</td>
                     <td className="text-center">
                       <Button variant="outline-warning m-1" onClick={() => handleShow(order)}>
-                        Editar Estado
+                        Update state
                       </Button>
                       <Button variant="outline-info m-1" onClick={() => handleShowDetail(order)}>
-                        Detalle
+                        Details
                       </Button>
                     </td>
                   </tr>
@@ -103,23 +103,23 @@ const OrderList = () => {
         totalItems={orders.Orders.length} perPage={perPage} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Editar Estado de la Orden N°: {selectedOrder?.id}</Modal.Title>
+          <Modal.Title>Update state of order N°: {selectedOrder?.id}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleUpdateStatus}>
             <Form.Group controlId="formStatus">
-              <Form.Label>Estado de la Orden</Form.Label>
+              <Form.Label>Order state</Form.Label>
               <Form.Control as="select" value={newStatus} onChange={(e) => setNewStatus(e.target.value)}>
-                <option value="confirmed">Confirmado</option>
-                <option value="processing">En Proceso</option>
-                <option value="shipped">Enviado</option>
-                <option value="delivered">Entregado</option>
-                <option value="canceled">Cancelado</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="processing">Processing</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+                <option value="canceled">Canceled</option>
               </Form.Control>
             </Form.Group>
             <div className="text-end mt-3">
               <Button variant="outline-secondary" type="submit">
-                Actualizar Estado
+                Update State
               </Button>
             </div>
           </Form>

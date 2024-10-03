@@ -32,7 +32,7 @@ const SpecificCategory = () => {
       <Container style={{ marginBottom: "3rem" }}>
         <div className="my-4">
           <h4 className="mb-4">
-            All shoes from - <span className="text-capitalize">{SpecificCategory}</span>
+            All shoes - <span className="text-capitalize">{SpecificCategory}</span>
           </h4>
         </div>
         <Form>
