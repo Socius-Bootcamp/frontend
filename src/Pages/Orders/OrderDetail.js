@@ -13,7 +13,7 @@ const OrderDetail = () => {
   const order = orders.Orders.find((order) => order.id === orderId);
 
   if (!order) {
-    return <div>Orden no encontrada</div>;
+    return <div>Order not found</div>;
   }
 
   return (
@@ -45,7 +45,7 @@ const OrderDetail = () => {
               </Card.Body>
             </Card>
           ) : (
-            <div className="alert alert-warning m-2">Usuario no encontrado</div>
+            <div className="alert alert-warning m-2">User not found</div>
           )}
 
           <Card className="m-2 flex-grow-1">

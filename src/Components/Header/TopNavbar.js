@@ -16,7 +16,7 @@ const TopNavbar = () => {
   return (
     <Navbar bg="dark" expand="lg" variant="dark">
       <Container>
-        <NavLink to="/" className="navbar-brand">
+        <NavLink to="/home" className="navbar-brand">
           <Image
             src="../img/Nike.png"
             alt="Logo"
@@ -27,7 +27,7 @@ const TopNavbar = () => {
         {user && (
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <NavLink to="/Home" className="nav-link">
+              <NavLink to="/home" className="nav-link">
                 Home
               </NavLink>
               <NavDropdown title="Categories" id="basic-nav-dropdown">
@@ -41,15 +41,15 @@ const TopNavbar = () => {
                   })}
               </NavDropdown>
               <NavLink to="/Products" className="nav-link">
-                Zapatillas
+                Shoes
               </NavLink>
               {user.admin && (
                 <NavDropdown title="Administration" id="basic-nav-dropdown">
                   <Link to="/shoes" className="text-capitalize dropdown-item">
-                    Administrar Productos
+                    Manage Products
                   </Link>
                   <Link to="/orders" className="text-capitalize dropdown-item">
-                    Administrar Ordenes
+                    Manage Orders
                   </Link>
                   <Link to="/" onClick={handleLogout} className="text-capitalize dropdown-item">
                     Log Out

@@ -21,7 +21,9 @@ const Products = () => {
     <Fragment>
       <TopNavbar />
       <Container style={{ marginBottom: "3rem" }}>
-        <h4 className="mb-4">Showing All Products</h4>
+        <div className="my-4">
+          <h4 className="mb-4">Showing All Shoes</h4>
+        </div>
         <Form>
           <InputGroup className="my-3">
             <Form.Control onChange={(e) => setSearch(e.target.value)} placeholder="Search by product name" />

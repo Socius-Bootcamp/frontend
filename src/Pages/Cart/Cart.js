@@ -22,6 +22,7 @@ const Cart = () => {
     }
   };
 
+  //Llamando el store para obtener el cart y productos en caso de que estos sufrieran cambios
   useEffect(() => {
     store.dispatch(productsFetch()).catch((error) => {
       console.log("No connection to cart on DB, " + error.message);
@@ -93,7 +94,7 @@ const Cart = () => {
                     <button onClick={handleBuy}>Check out</button>
                   )}
                   <div className="continue-shopping">
-                    <Link to="/">
+                    <Link to="/home">
                       <span> Continue Shopping</span>
                     </Link>
                   </div>

@@ -14,6 +14,7 @@ const UserProfile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  //Llamando al store para obtener las ordenes otra vez, en caso de que estos sufrieran cambios
   useEffect(() => {
     store.dispatch(userOrdersFetch()).catch((error) => {
       console.log("No connection to cart on DB, " + error.message);
@@ -40,10 +41,10 @@ const UserProfile = () => {
           {user ? (
             <Card className="m-2" style={{ width: "18rem" }}>
               <Card.Body>
-                <Card.Title className="text-center">Información del Usuario</Card.Title>
+                <Card.Title className="text-center">My account details</Card.Title>
                 <hr></hr>
                 <Card.Text>
-                  <strong>Nombre:</strong> {user.firstName} {user.lastName}
+                  <strong>Name:</strong> {user.firstName} {user.lastName}
                   <br />
                   <strong>Email:</strong> {user.email}
                   <br />
@@ -52,7 +53,7 @@ const UserProfile = () => {
               </Card.Body>
             </Card>
           ) : (
-            <div className="alert alert-warning m-2">Usuario no encontrado</div>
+            <div className="alert alert-warning m-2">User not found</div>
           )}
 
           <Card className="m-2 flex-grow-1">

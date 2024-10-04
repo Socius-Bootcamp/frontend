@@ -98,27 +98,27 @@ const ShoeForm = ({ onSubmit, initialData }) => {
                 <p>Editing {initialData.name}</p>
             ) : <p>Creating new Product</p>}
             <div className='my-2'>
-                <label className='form-label' htmlFor='name'>Nombre</label>
-                <input type="text" id="name" name="name" value={formData.name}  onChange={handleChage} className="form-control" placeholder="Nombre del Modelo de Zapatilla"/>
+                <label className='form-label' htmlFor='name'>Model Name</label>
+                <input type="text" id="name" name="name" value={formData.name}  onChange={handleChage} className="form-control" placeholder="Shoe model name"/>
                 {errors.name && <small className='text-danger'>{errors.name}</small>}
             </div>
 
             <div className='my-2'>
-                <label className='form-label' htmlFor='price'>Precio</label>
-                <input type="number" id="price" name="price" value={formData.price} onChange={handleChage} className="form-control" placeholder="Precio de Venta"/>
+                <label className='form-label' htmlFor='price'>Price</label>
+                <input type="number" id="price" name="price" value={formData.price} onChange={handleChage} className="form-control" placeholder="Selling price"/>
                 {errors.price && <small className="text-danger">{errors.price}</small>}
             </div>
 
             <div className='mt-2'>
                 <label className='form-label' htmlFor='stock'>Stock</label>
-                <input type="number" id="stock" name="stock" value={formData.stock}  onChange={handleChage} className="form-control" placeholder="Stock Disponible"/>
+                <input type="number" id="stock" name="stock" value={formData.stock}  onChange={handleChage} className="form-control" placeholder="Available Stock"/>
                 {errors.stock && <small className="text-danger">{errors.stock}</small>}
             </div>
 
             <div className='mt-2'>
-                <label className='form-label' htmlFor='CategoryId'>Categoría</label>
+                <label className='form-label' htmlFor='CategoryId'>Category</label>
                 <select id="CategoryId" name="CategoryId" value={formData.CategoryId}  onChange={handleChage} className="form-select">
-                <option value="none">Seleccione una categoria</option>
+                <option value="none">Select category</option>
 
                 {categories ? (
                     categories.map(category =>
@@ -138,7 +138,7 @@ const ShoeForm = ({ onSubmit, initialData }) => {
 
             <div className='m-3 text-end'>
                 <button type='submit' className='btn btn-outline-secondary '>
-                    {initialData ? 'Actualizar' : 'Agregar'}
+                    {initialData ? 'Update' : 'Create'}
                 </button>
             </div>
         </form>

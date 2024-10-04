@@ -40,11 +40,11 @@ const ShoeList = ({ shoes, onEdit, onDelete }) => {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>Modelo</th>
-              <th>Precio</th>
+              <th>Model</th>
+              <th>Price</th>
               <th>Stock</th>
-              <th>Categoria</th>
-              <th>Acciones</th>
+              <th>Category</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -62,10 +62,10 @@ const ShoeList = ({ shoes, onEdit, onDelete }) => {
                     <td>{categories.find((c) => c.id === shoe.CategoryId).name}</td>
                     <td className="text-center">
                       <Button variant="outline-warning" onClick={() => onEdit(shoe)}>
-                        Editar
+                        Edit
                       </Button>
                       <Button variant="outline-danger" onClick={() => handleShow(shoe)} className="ms-2">
-                        Borrar
+                        Delete
                       </Button>
                     </td>
                   </tr>
@@ -73,7 +73,7 @@ const ShoeList = ({ shoes, onEdit, onDelete }) => {
             ) : (
               <tr>
                 <td colSpan="5" className="text-center">
-                  No hay zapatillas disponibles
+                  No existing shoes
                 </td>
               </tr>
             )}
