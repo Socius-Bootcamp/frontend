@@ -94,7 +94,7 @@ const Cart = () => {
                     <button onClick={handleBuy}>Check out</button>
                   )}
                   <div className="continue-shopping">
-                    <Link to="/">
+                    <Link to="/home">
                       <span> Continue Shopping</span>
                     </Link>
                   </div>

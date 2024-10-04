@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopNavbar from "../../Components/Header/TopNavbar";
 import Footer from "../../Components/Footer/Footer";
 import ShoeList from "../../Components/Shoe/ShoeList";
 import ShoeForm from "../../Components/Shoe/ShoeForm";
 import { Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct, deleteProduct, updateProduct } from "../../Redux/Product/ProductSlice";
+import { createProduct, deleteProduct, productsFetch, updateProduct } from "../../Redux/Product/ProductSlice";
+import store from "../../Redux/Store";
 
 const ShoeManager = () => {
   const shoes = useSelector((state) => state.products).products;
   const dispatch = useDispatch();
   const [currentShoe, setCurrentShoe] = useState(null);
+
+  useEffect(() => {
+    store.dispatch(productsFetch()).catch((error) => {
+      console.log("No connection to cart on DB, " + error.message);
+    });
+  }, [dispatch]);
 
   const addShoe = (shoe) => {
     dispatch(createProduct(shoe));
