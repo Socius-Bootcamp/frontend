@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Form, Button, Container, Row, Col, Card, Navbar, Image, Spinner } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Card, Navbar, Image, Spinner, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
 import "./Login.css";
@@ -42,10 +42,15 @@ const Login = () => {
           });
       })
       .catch((error) => {
-        alert("Credenciales incorrectas");
+        handleShow();
         setIsLoading(false);
       });
   };
+
+  // Modal
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   return (
     <Fragment>
@@ -116,6 +121,24 @@ const Login = () => {
             </Col>
           </Row>
         </Container>
+        <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <>
+                <Modal.Header closeButton>
+                <Modal.Title>Log in Error</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Wrong credentials
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="primary" onClick={handleClose}>Understood</Button>
+                </Modal.Footer>
+                </>
+        </Modal>
         <Footer />
       </div>
     </Fragment>

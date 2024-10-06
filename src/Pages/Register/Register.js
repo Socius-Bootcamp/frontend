@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Button, Card, Col, Container, Form, Image, Navbar, Row, Spinner } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Image, Modal, Navbar, Row, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import "./Register.css";
 import Footer from "../../Components/Footer/Footer";
@@ -92,7 +92,6 @@ const Register = () => {
       dispatch(registerUser(formData))
         .unwrap()
         .then(() => {
-          alert("Registration successful");
           setFormData({ firstName: "", lastName: "", phone: "", email: "", password: "", password2: "" });
           // Crea un array con todas las promesas de dispatch, para obtener y guardar los datos en el store
           const promises = [
@@ -105,15 +104,17 @@ const Register = () => {
           // Usa Promise.all para esperar a que todas se resuelvan antes de avanzar
           Promise.all(promises)
             .then(() => {
+              setSuccess(true);
+              handleShow();
               setIsLoading(false);
-              navigate("/home");
             })
             .catch((error) => {
               console.log("Error en alguna de las peticiones, " + error.message);
             });
         })
         .catch(() => {
-          alert("Account with that email already exists");
+          setSuccess(false);
+          handleShow();
           setIsLoading(false);
         });
     } else {
@@ -121,6 +122,18 @@ const Register = () => {
       setIsLoading(false);
     }
   };
+
+  //Modal
+  const [success, setSuccess] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+    setShow(false);
+    if (success) {
+      navigate("/home");
+    }
+  };
+  const handleShow = () => setShow(true);
 
   return (
     <Fragment>
@@ -254,6 +267,33 @@ const Register = () => {
           </Col>
         </Row>
       </Container>
+      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+        {success ? (
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title>Register success</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Succesfully created your new account</Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={handleClose}>
+                Understood
+              </Button>
+            </Modal.Footer>
+          </>
+        ) : (
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title>Register Error</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Account with that email already exists</Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={handleClose}>
+                Understood
+              </Button>
+            </Modal.Footer>
+          </>
+        )}
+      </Modal>
       <Footer />
     </Fragment>
   );
