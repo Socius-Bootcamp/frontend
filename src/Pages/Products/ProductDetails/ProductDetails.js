@@ -96,9 +96,9 @@ const ProductDetails = () => {
                       </Button>
                     </div>
                     <div className="">
-                      <Button variant="dark" className="me-2" onClick={handleAddToCart}>
-                        Add To Cart
-                      </Button>
+                    <Button variant="dark" className="me-2" onClick={handleAddToCart} style={{ backgroundColor: "#a61cf8", color: "white", border: "none" }} >
+                      Add To Cart
+                    </Button>
                     </div>
                   </>
                 )}

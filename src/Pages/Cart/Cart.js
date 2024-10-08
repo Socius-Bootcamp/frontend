@@ -91,7 +91,9 @@ const Cart = () => {
                       <p>Item(s) in your cart have 0 stock to sell, please remove them and refresh</p>
                     </>
                   ) : (
-                    <button onClick={handleBuy}>Check out</button>
+                    <button onClick={handleBuy} style={{ backgroundColor: "#a21cff", color: "#fff" }}>
+                      Check out
+                    </button>
                   )}
                   <div className="continue-shopping">
                     <Link to="/home">
