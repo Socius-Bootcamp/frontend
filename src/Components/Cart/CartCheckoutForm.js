@@ -142,7 +142,7 @@ const CartCheckoutForm = () => {
 
       <div className="m-3 text-end">
         <button type="submit" className="btn btn-outline-secondary ">
-          Agregar
+          Create
         </button>
       </div>
     </form>

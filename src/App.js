@@ -15,7 +15,8 @@ import Login from "./Pages/Login/Login";
 import UserProfile from "./Pages/User/UserProfile";
 import axios from "axios";
 import Register from "./Pages/Register/Register";
-
+import ProtectedRoutesAdmin from "./ProtectedRoutes/ProtectedRoutesAdmin";
+import ProtectedRoutesUser from "./ProtectedRoutes/ProtectedRoutesUser";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -24,17 +25,22 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/Products" element={<Products />} />
-        <Route path="/category/:SpecificCategory" element={<SpecificCategory />} />
-        <Route path="/shoes" element={<ShoeManager />} />
-        <Route path="/orders" element={<OrderList />} />
-        <Route path="/order/:id" element={<OrderDetail />} />
-        <Route path="/Product/:id" element={<ProductDetails />} />
-        <Route path="/Cart" element={<Cart />} />
-        <Route path="/CartCheckout" element={<CartCheckout />} />
-        <Route path="/Profile" element={<UserProfile />} />
         <Route path="/Register" element={<Register />} />
+        <Route element={<ProtectedRoutesUser />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/Products" element={<Products />} />
+          <Route path="/category/:SpecificCategory" element={<SpecificCategory />} />
+          <Route element={<ProtectedRoutesAdmin />}>
+            <Route path="/shoes" element={<ShoeManager />} />
+            <Route path="/orders" element={<OrderList />} />
+          </Route>
+          <Route path="/order/:id" element={<OrderDetail />} />
+          <Route path="/Product/:id" element={<ProductDetails />} />
+          <Route path="/Cart" element={<Cart />} />
+          <Route path="/CartCheckout" element={<CartCheckout />} />
+          <Route path="/Profile" element={<UserProfile />} />
+        </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Fragment>

@@ -9,6 +9,7 @@ import { addItem } from "../../../Redux/Cart/CartSlice";
 
 const ProductDetails = () => {
   const { categories } = useSelector((state) => state.categories);
+  const { user } = useSelector((state) => state.user);
   let { id } = useParams();
   let [product, setProduct] = useState(null);
   let [quantity, setQuantity] = useState(1);
@@ -80,26 +81,34 @@ const ProductDetails = () => {
                   <h3>Out of stock</h3>
                 ) : (
                   <>
-                    <div className="d-flex mb-3">
-                      <Button className="btn btn-sm btn-dark fs-6 me-3 text-center" onClick={decreaseQty}>
-                        -
-                      </Button>
-                      <input
-                        type="number"
-                        className="form-control text-center w-auto p-0 m-0"
-                        value={quantity}
-                        readOnly={true}
-                        required={true}
-                      />
-                      <Button className="btn btn-sm btn-dark fs-6 ms-3 text-center" onClick={increaseQty}>
-                        +
-                      </Button>
-                    </div>
-                    <div className="">
-                      <Button variant="dark" className="me-2" onClick={handleAddToCart}>
-                        Add To Cart
-                      </Button>
-                    </div>
+                    {!user.admin ? (
+                      <>
+                        <div className="d-flex mb-3">
+                          <Button className="btn btn-sm btn-dark fs-6 me-3 text-center" onClick={decreaseQty}>
+                            -
+                          </Button>
+                          <input
+                            type="number"
+                            className="form-control text-center w-auto p-0 m-0"
+                            value={quantity}
+                            readOnly={true}
+                            required={true}
+                          />
+                          <Button className="btn btn-sm btn-dark fs-6 ms-3 text-center" onClick={increaseQty}>
+                            +
+                          </Button>
+                        </div>
+                        <div className="">
+                          <Button variant="dark" className="me-2" onClick={handleAddToCart}>
+                            Add To Cart
+                          </Button>
+                        </div>
+                      </>
+                    ) : (
+                      <Link to="/shoes">
+                        <Button>Go to Manage Products</Button>
+                      </Link>
+                    )}
                   </>
                 )}
               </div>
