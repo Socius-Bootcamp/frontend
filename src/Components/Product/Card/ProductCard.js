@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import "./ProductCard.css";
+import "./ProductCard.module.css";
 import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
