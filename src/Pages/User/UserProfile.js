@@ -33,9 +33,9 @@ const UserProfile = () => {
   const firstItemIndex = lastItemIndex - perPage;
 
   return (
-    <div>
-      <div>
-        <TopNavbar />
+    <div> 
+      <TopNavbar />
+      <div style={{ marginBottom: "3rem" }}>
         <h1 className="m-4 text-center">My Profile</h1>
         <div className="d-flex justify-content-start m-2">
           {user ? (
