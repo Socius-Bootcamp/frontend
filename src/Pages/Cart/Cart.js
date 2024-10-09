@@ -4,7 +4,7 @@ import Footer from "../../Components/Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import CartItemCard from "../../Components/Cart/CartItemCard";
+import CartItemCard from "../../Components/Cart/CartItemCard";           /* Cart */
 import { cartFetch, emptyCart } from "../../Redux/Cart/CartSlice";
 import store from "../../Redux/Store";
 import { productsFetch } from "../../Redux/Product/ProductSlice";
@@ -64,6 +64,7 @@ const Cart = () => {
                 <h3 className="quantity">Quantity</h3>
                 <h3 className="total">Total</h3>
               </div>
+              
               <div className="cart-items">
                 {cart.CartItems.map((cartItem) => {
                   return (
