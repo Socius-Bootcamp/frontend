@@ -146,3 +146,76 @@
 .start-shopping a span {
   margin-left: 0.5rem;
 }
+
+@media (max-width: 570px) {
+  .cart-container {
+    padding: 1rem; /* Ajustar el padding para pantallas pequeñas */
+  }
+
+  .cart-item {
+    display: flex;
+    flex-direction: column; /* Cambiar la dirección del flujo a columna */
+    align-items: center; /* Centrar los elementos */
+    border: none; /* Quitar borde superior para un mejor diseño en móviles */
+    padding: 0.5rem 0; /* Ajustar el padding */
+  }
+
+  .cart-product {
+    flex-direction: column; /* Alinear los elementos en columna */
+    align-items: center; /* Centrar el contenido */
+  }
+
+  .cart-product img {
+    width: 80%; /* Ajustar el tamaño de la imagen */
+    margin-bottom: 0.5rem; /* Espaciado inferior entre la imagen y el nombre */
+  }
+
+  .cart-product h3 {
+    font-weight: 700; /* Hacer el nombre del producto más prominente */
+    text-align: center; /* Centrar el texto */
+    margin-bottom: 0.5rem; /* Espaciado inferior */
+  }
+
+  .cart-item .cart-product-quantity {
+    margin: 0.5rem 0; /* Espacio vertical entre cantidad y otros elementos */
+  }
+
+  .cart-product-price,
+  .cart-product-total-price {
+    font-weight: 700; /* Hacer el precio más prominente */
+    margin-bottom: 0.5rem; /* Espaciado inferior para separación */
+  }
+
+  /* Para los elementos de cantidad, precio y total */
+  .cart-item {
+    flex-direction: row; /* Regresar a la fila para precios y cantidades */
+    justify-content: space-between; /* Espacio entre los elementos */
+    width: 100%; /* Ocupa el 100% del ancho disponible */
+  }
+
+  .cart-product-quantity {
+    display: flex; /* Mantener la distribución de botones y conteo */
+    align-items: center; /* Centrar los elementos verticalmente */
+  }
+
+  .cart-item .cart-product-total-price {
+    padding-right: 1rem; /* Espaciado a la derecha para el total */
+  }
+
+  /* Asegúrate de que el hr se vea bien en pantallas pequeñas */
+  hr {
+    border: 1px solid #ccc; /* Color y grosor del hr */
+    width: 100%; /* Asegúrate de que ocupe el 100% del ancho */
+    margin: 1rem 0; /* Espaciado alrededor del hr */
+  }
+}
+
+.cart-product p {
+  text-align: center; /* Centrar el texto */
+  margin: 0; /* Eliminar márgenes para una alineación perfecta */
+}
+
+.total {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
