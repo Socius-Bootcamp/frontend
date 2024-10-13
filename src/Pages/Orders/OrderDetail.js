@@ -1,9 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Card, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import TopNavbar from "../../Components/Header/TopNavbar";
 import Footer from "../../Components/Footer/Footer";
 import { useSelector } from "react-redux";
+import styles from './OrderList.module.css'; 
 
 const OrderDetail = () => {
   const { id } = useParams();
@@ -18,75 +19,70 @@ const OrderDetail = () => {
 
   return (
     <div>
-      <div>
-        <TopNavbar />
-        <h1 className="m-4 text-center">Order N°{order.id} details</h1>
-        <div className="d-flex justify-content-start m-2">
-          {order ? (
-            <Card className="m-2" style={{ width: "18rem" }}>
-              <Card.Body>
-                <Card.Title className="text-center">Order information</Card.Title>
-                <hr></hr>
-                <Card.Text>
-                  <strong>Status:</strong> {order.status}
-                  <br />
-                  <strong>Date:</strong> {order.date.slice(0, 16).replace("T", " ")}
-                  <br />
-                  <strong>Street:</strong> {order.address1}
-                  <br />
-                  <strong>Number/Letter:</strong> {order.address2}
-                  <br />
-                  <strong>Province:</strong> {order.province}
-                  <br />
-                  <strong>City:</strong> {order.city}
-                  <br />
-                  <strong>Country:</strong> {order.country}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          ) : (
-            <div className="alert alert-warning m-2">User not found</div>
-          )}
-
-          <Card className="m-2 flex-grow-1">
-            <Card.Body>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Product</th>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {order.OrderItems &&
-                    order.OrderItems.map((item) => (
-                      <tr key={item.id}>
-                        <td>
-                          <img
-                            src={`../img/products/${products.find((p) => p.id === item.ProductId).image}`}
-                            alt={item.name}
-                            width="100"
-                          />
-                        </td>
-                        <td>{products.find((p) => p.id === item.ProductId).name}</td>
-                        <td>{item.qty}</td>
-                        <td>${item.price}</td>
-                        <td>${item.qty * item.price}</td>
-                      </tr>
-                    ))}
-                </tbody>
-              </Table>
-              <div className="d-flex justify-content-end mt-4">
-                <h5>Order Total: ${order.total}</h5>
-              </div>
-            </Card.Body>
-          </Card>
+      <TopNavbar />
+      <div className="container mt-4">
+        {/* Header with the order number */}
+        <h1 className="text-center">Order N°{order.id} Details</h1>
+        
+        {/* Order information */}
+        <div className={`card p-3 mb-4 ${styles.orderInfoCard}`}>
+          <h3 className="text-center">Order Information</h3>
+          <hr />
+          <div className="row">
+            <div className="col-md-6">
+              <p><strong>Status:</strong> {order.status}</p>
+              <p><strong>Date:</strong> {order.date.slice(0, 16).replace("T", " ")}</p>
+              <p><strong>Street:</strong> {order.address1}</p>
+              <p><strong>Number/Letter:</strong> {order.address2}</p>
+            </div>
+            <div className="col-md-6">
+              <p><strong>Province:</strong> {order.province}</p>
+              <p><strong>City:</strong> {order.city}</p>
+              <p><strong>Country:</strong> {order.country}</p>
+            </div>
+          </div>
         </div>
-        <Footer />
+
+        {/* Product table */}
+        <div className={`card p-3 ${styles.tableContainer}`}>
+          <h4>Order Items</h4>
+          <div className={styles.tableResponsive}>
+            <Table striped bordered hover className={styles.responsiveTable}>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Name</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {order.OrderItems &&
+                  order.OrderItems.map((item) => (
+                    <tr key={item.id}>
+                      <td>
+                        <img
+                          className={styles.productImage}
+                          src={`../img/products/${products.find((p) => p.id === item.ProductId).image}`}
+                          alt={item.name}
+                        />
+                      </td>
+                      <td>{products.find((p) => p.id === item.ProductId).name}</td>
+                      <td>{item.qty}</td>
+                      <td>${item.price}</td>
+                      <td>${item.qty * item.price}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
+          </div>
+          <div className="d-flex justify-content-end mt-4">
+            <h5>Order Total: ${order.total}</h5>
+          </div>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

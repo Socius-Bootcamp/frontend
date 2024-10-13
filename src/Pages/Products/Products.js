@@ -12,7 +12,7 @@ const Products = () => {
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const perPage =12;
+  const perPage = 12;
 
   const lastItemIndex = currentPage * perPage;
   const firstItemIndex = lastItemIndex - perPage;
@@ -26,27 +26,40 @@ const Products = () => {
         </div>
         <Form>
           <InputGroup className="my-3">
-            <Form.Control onChange={(e) => setSearch(e.target.value)} placeholder="Search by product name" />
+            <Form.Control
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by product name"
+            />
           </InputGroup>
         </Form>
         <Row>
           {products &&
             products
               .filter((item) => {
-                return search.toLocaleLowerCase() === "" ? item : item.name.toLocaleLowerCase().includes(search);
-              }).slice(firstItemIndex,lastItemIndex)
+                return search.toLocaleLowerCase() === ""
+                  ? item
+                  : item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase());
+              })
+              .slice(firstItemIndex, lastItemIndex)
               .map((p) => {
                 return (
-                  <Col xs={12} sm={6} md={4} lg={2} className="mb-4" key={p.id}>
+                  <Col xs={12} sm={6} md={4} lg={3} className="mb-4" key={p.id}>
                     <ProductCard product={p} />
                   </Col>
                 );
               })}
         </Row>
-        <Pagination 
-        totalItems={products.filter((item) => {
-                return search.toLocaleLowerCase() === "" ? item : item.name.toLocaleLowerCase().includes(search);
-              }).length} perPage={perPage} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
+        <Pagination
+          totalItems={products
+            .filter((item) => {
+              return search.toLocaleLowerCase() === ""
+                ? item
+                : item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase());
+            }).length}
+          perPage={perPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </Container>
       <Footer />
     </Fragment>

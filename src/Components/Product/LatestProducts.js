@@ -12,7 +12,7 @@ const LatestProducts = () => {
         {products &&
           products.slice(-6).map((product) => {
             return (
-              <Col xs={12} sm={6} md={4} lg={2} className="mb-4" key={product.id}>
+              <Col xs={12} sm={6} md={4} lg={3} className="mb-4" key={product.id}>
                 <ProductCard product={product} />
               </Col>
             );

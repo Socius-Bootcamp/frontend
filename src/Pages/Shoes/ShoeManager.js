@@ -52,13 +52,21 @@ const ShoeManager = () => {
             <Card.Body>
               <div className="row">
                 <Card.Title className="col-sm">Shoe List</Card.Title>
-                <div className="col-sm">
-                  <Button variant="outline-success" onClick={newShoe} style={{ float: "right" }}>
+                <div className="col-sm text-end">
+                  <Button 
+                    variant="outline-success" 
+                    onClick={newShoe} 
+                    style={{ marginLeft: "10px" }} // Space between buttons
+                  >
                     Create New
                   </Button>
                 </div>
               </div>
-              <ShoeList shoes={shoes} onEdit={editShoe} onDelete={deleteShoe} />
+              <div className="table-responsive">
+                <ShoeList shoes={shoes} onEdit={editShoe} onDelete={deleteShoe} />
+              </div>
+              <div style={{ marginTop: "20px" }}> {/* Space between rows of buttons */}
+              </div>
             </Card.Body>
           </Card>
         </div>

@@ -1,10 +1,10 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from "react"; 
 import { Carousel } from "react-bootstrap";
 
 const HeaderSlider = () => {
   return (
     <Fragment>
-      <Carousel data-bs-theme="dark">
+      <Carousel data-bs-theme="dark" style={{ marginTop: "58px" }}> 
         <Carousel.Item>
           <img
             className="d-block w-100"
@@ -18,7 +18,7 @@ const HeaderSlider = () => {
             className="d-block w-100"
             style={{ height: "100vh", objectFit: "cover" }} 
             src="../img/slider/work-dream.png"
-            alt="stop dream start working"
+            alt="Stop dream start working"
           />
         </Carousel.Item>
         <Carousel.Item>
