@@ -1,10 +1,12 @@
 .login-container {
     height: 100vh;
-    position: relative;
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center; 
     background-size: cover;
     background-position: center;
-    background-image: url('/public/img/Login/Login2.jpg'); 
-    padding-top: 80px; 
+    background-image: url('/public/img/Login/Login2.jpg');
+    padding-top: 7%;
 }
 
 .login-card {
@@ -12,24 +14,31 @@
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 2rem;
-    position: absolute; 
-    top: 60%; /* Mantener centrado verticalmente */
-    left: -25%; /* Mover más a la izquierda (ajusta este valor) */
-    transform: translate(-50%, -50%); 
+    width: 100%;
+    max-width: 400px; 
+    margin-left: 30%; 
 }
 
 .login-card h3 {
     margin-bottom: 1.5rem;
 }
 
+@media (max-width: 991px) {
+    .login-card {
+        padding-top: 20%;
+        margin-left: 30%; 
+    }
+}
+
 @media (max-width: 576px) {
     .login-container {
-        padding: 1rem; 
+        padding: 1rem;
     }
 
     .login-card {
-        padding: 1.5rem; 
-        left: 50%; /* Centramos el formulario en pantallas pequeñas */
-        transform: translate(-50%, -50%);
+        padding: 1.5rem;
+        padding-top: 20%;
+        max-width: 100%; 
+        margin-left: 15%;
     }
 }

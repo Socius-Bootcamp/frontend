@@ -9,9 +9,11 @@ const Home = () => {
   return (
     <Fragment>
       <TopNavbar />
-      <HeaderSlider />
-      <AllCategories />
-      <LatestProducts />
+      <div style={{ marginBottom: "6rem" }}> {/* Aquí se agrega el margin-bottom */}
+        <HeaderSlider />
+        <AllCategories />
+        <LatestProducts />
+      </div>
       <Footer />
     </Fragment>
   );

@@ -20,7 +20,7 @@ const Products = () => {
   return (
     <Fragment>
       <TopNavbar />
-      <Container style={{ marginBottom: "3rem" }}>
+      <Container style={{ marginBottom: "5rem" }}>
         <div className="my-4">
           <h4 className="mb-4">Showing All Shoes</h4>
         </div>

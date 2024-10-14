@@ -47,9 +47,10 @@ const OrderList = () => {
   const firstItemIndex = lastItemIndex - perPage;
 
   return (
-    <div className="container-fluid p-0" style={{ marginBottom: "3rem" }}>
+    <div className="container-fluid p-0" style={{ marginBottom: "6rem" }}>
       <TopNavbar />
-      <h1 className="m-4 text-center">Orders Management</h1>
+      <h1 className="text-center" style={{ marginTop: "5rem" }}>Orders Management</h1>
+      <br/>
       <Card className="m-2">
         <Card.Body>
           {/* Aplica la clase tableContainer al contenedor de la tabla */}

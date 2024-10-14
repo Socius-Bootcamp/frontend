@@ -65,7 +65,7 @@ const Login = () => {
       <div className="login-container d-flex flex-column min-vh-100"> {/* Agregamos d-flex y min-vh-100 */}
         <Container fluid className="flex-fill"> {/* Flex-fill para que ocupe el espacio disponible */}
           <Row className="w-100">
-            <Col xs={10} sm={8} md={6} lg={4} className="left-align mx-auto"> {/* mx-auto para centrar */}
+          <Col xs={10} sm={8} md={6} lg={4} className="left-align"> {/* Elimina mx-auto */}
               <Card className="p-4 shadow-lg login-card">
                 <Card.Body>
                   <h3 className="text-center mb-4">Welcome back!</h3>

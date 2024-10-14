@@ -43,9 +43,9 @@ const ShoeManager = () => {
   };
 
   return (
-    <div className="container-fluid p-0" style={{ marginBottom: "3rem" }}>
+    <div className="container-fluid p-0" style={{ marginBottom: "6rem" }}>
       <TopNavbar />
-      <h1 className="text-center mt-5">Products Management</h1>
+      <h1 className="text-center" style={{ marginTop: "6rem" }}>Products Management</h1>
       <div className="row mx-5">
         <div className="col-12 col-lg-6 mt-5 order-lg-0 order-1">
           <Card>

@@ -35,7 +35,7 @@ const UserProfile = () => {
   return (
     <div> 
       <TopNavbar />
-      <div style={{ marginBottom: "3rem" }}>
+      <div style={{ marginBottom: "6rem" }}>
         <h1 className="m-4 text-center">My Profile</h1>
         <div className="d-flex flex-column flex-lg-row justify-content-start m-2">
           {user ? (
