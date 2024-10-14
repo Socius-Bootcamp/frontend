@@ -66,6 +66,7 @@ const ProductDetails = () => {
               </div>
             </Col>
             <Col md={6} sm={12}>
+            <br/>
               <div className="px-4">
                 <h2>{product.name}</h2>
                 <h4 className="py-2 fs-5">

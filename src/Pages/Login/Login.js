@@ -15,10 +15,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    // Realiza la solicitud de inicio de sesión
+    // Make the login request
     store
       .dispatch(logUser({ email, password }))
       .unwrap()
@@ -57,18 +58,14 @@ const Login = () => {
       <Navbar bg="dark" expand="lg" variant="dark">
         <Container>
           <Link to="/" className="navbar-brand">
-            <Image
-              src="../img/Nike.png"
-              alt="Logo"
-              style={{ height: "30px" }} // Ajusta la altura del logo según lo necesites
-            />
+            <Image src="../img/Nike.png" alt="Logo" style={{ height: "30px" }} />
           </Link>
         </Container>
       </Navbar>
-      <div className="login-container">
-        <Container fluid>
+      <div className="login-container d-flex flex-column min-vh-100"> {/* Agregamos d-flex y min-vh-100 */}
+        <Container fluid className="flex-fill"> {/* Flex-fill para que ocupe el espacio disponible */}
           <Row className="w-100">
-            <Col xs={10} sm={8} md={6} lg={4} className="left-align">
+          <Col xs={10} sm={8} md={6} lg={4} className="left-align"> {/* Elimina mx-auto */}
               <Card className="p-4 shadow-lg login-card">
                 <Card.Body>
                   <h3 className="text-center mb-4">Welcome back!</h3>
@@ -121,23 +118,16 @@ const Login = () => {
             </Col>
           </Row>
         </Container>
-        <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-            >
-                <>
-                <Modal.Header closeButton>
-                <Modal.Title>Log in Error</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  Wrong credentials
-                </Modal.Body>
-                <Modal.Footer>
-                <Button variant="primary" onClick={handleClose}>Understood</Button>
-                </Modal.Footer>
-                </>
+        <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title>Log in Error</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Wrong credentials</Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={handleClose}>Understood</Button>
+            </Modal.Footer>
+          </>
         </Modal>
         <Footer />
       </div>

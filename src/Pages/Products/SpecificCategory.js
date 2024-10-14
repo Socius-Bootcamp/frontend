@@ -29,7 +29,7 @@ const SpecificCategory = () => {
   return (
     <Fragment>
       <TopNavbar />
-      <Container style={{ marginBottom: "3rem" }}>
+      <Container style={{ marginBottom: "6rem" }}>
         <div className="my-4">
           <h4 className="mb-4">
             All shoes - <span className="text-capitalize">{SpecificCategory}</span>
@@ -49,7 +49,7 @@ const SpecificCategory = () => {
               .slice(firstItemIndex, lastItemIndex)
               .map((product) => {
                 return (
-                  <Col xs={12} sm={6} md={2} lg={2} className="mb-4" key={product.id}>
+                  <Col xs={12} sm={6} md={2} lg={3} className="mb-4" key={product.id}>
                     <ProductCard product={product} />
                   </Col>
                 );

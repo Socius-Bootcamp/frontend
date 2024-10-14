@@ -15,14 +15,14 @@ const Cart = () => {
   const navigate = useNavigate();
   const [outOfStock, setOutOfStock] = useState(false);
 
-  // Función que recibirá el estado de los hijos sobre si hay un producto sin stock
+  // Function that will receive the status of the children about whether a product is out of stock
   const handleOutOfStock = (isOutOfStock) => {
     if (isOutOfStock) {
-      setOutOfStock(true); // Deshabilitará el botón si algún item está sin stock
+      setOutOfStock(true); // Will disable the button if any item is out of stock
     }
   };
 
-  //Llamando el store para obtener el cart y productos en caso de que estos sufrieran cambios
+  // Calling the store to get the cart and products in case they undergo changes
   useEffect(() => {
     store.dispatch(productsFetch()).catch((error) => {
       console.log("No connection to cart on DB, " + error.message);
@@ -45,7 +45,7 @@ const Cart = () => {
   return (
     <Fragment>
       <TopNavbar />
-      <Container>
+      <Container style={{ marginBottom: "4rem" }}> {/* Aquí se agrega el margin-bottom */}
         <Row>
           {!cart.CartItems.length && (
             <div className="m-auto w-100 text-center my-5">
@@ -107,7 +107,6 @@ const Cart = () => {
           )}
         </Row>
       </Container>
-
       <Footer />
     </Fragment>
   );

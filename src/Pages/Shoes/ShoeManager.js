@@ -43,22 +43,30 @@ const ShoeManager = () => {
   };
 
   return (
-    <div className="container-fluid p-0" style={{ marginBottom: "3rem" }}>
+    <div className="container-fluid p-0" style={{ marginBottom: "6rem" }}>
       <TopNavbar />
-      <h1 className="text-center mt-5">Products Management</h1>
+      <h1 className="text-center" style={{ marginTop: "6rem" }}>Products Management</h1>
       <div className="row mx-5">
         <div className="col-12 col-lg-6 mt-5 order-lg-0 order-1">
           <Card>
             <Card.Body>
               <div className="row">
                 <Card.Title className="col-sm">Shoe List</Card.Title>
-                <div className="col-sm">
-                  <Button variant="outline-success" onClick={newShoe} style={{ float: "right" }}>
+                <div className="col-sm text-end">
+                  <Button 
+                    variant="outline-success" 
+                    onClick={newShoe} 
+                    style={{ marginLeft: "10px" }} // Space between buttons
+                  >
                     Create New
                   </Button>
                 </div>
               </div>
-              <ShoeList shoes={shoes} onEdit={editShoe} onDelete={deleteShoe} />
+              <div className="table-responsive">
+                <ShoeList shoes={shoes} onEdit={editShoe} onDelete={deleteShoe} />
+              </div>
+              <div style={{ marginTop: "20px" }}> {/* Space between rows of buttons */}
+              </div>
             </Card.Body>
           </Card>
         </div>

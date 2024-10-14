@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"; 
 import { Container, Image, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
@@ -17,7 +17,7 @@ const TopNavbar = () => {
 
   return (
     <div className="navbar-wrapper">
-      <Navbar bg="dark" expand="lg" variant="dark">
+      <Navbar bg="dark" expand="lg" variant="dark" className="fixed-top"> 
         <Container>
           <NavLink to="/home" className="navbar-brand">
             <Image
@@ -91,4 +91,4 @@ const TopNavbar = () => {
   );
 };
 
-export default TopNavbar; 
+export default TopNavbar;

@@ -12,7 +12,7 @@ const AllCategories = () => {
         {categories &&
           categories.map((c, index) => {
             return (
-              <Col xs={12} sm={6} md={3} className="mb-2 p-2" key={index}>
+              <Col xs={12} sm={6} md={4} lg={4} className="mb-2 p-2" key={index}>
                 <CategoryCard category={c.name} />
               </Col>
             );
