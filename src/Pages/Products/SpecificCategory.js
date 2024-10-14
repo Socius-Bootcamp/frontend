@@ -30,6 +30,7 @@ const SpecificCategory = () => {
     <Fragment>
       <TopNavbar />
       <Container style={{ marginBottom: "6rem" }}>
+        <br/>
         <div className="my-4">
           <h4 className="mb-4">
             All shoes - <span className="text-capitalize">{SpecificCategory}</span>

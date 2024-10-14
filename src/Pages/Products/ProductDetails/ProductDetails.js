@@ -61,6 +61,7 @@ const ProductDetails = () => {
         {product ? (
           <Row className="my-5">
             <Col md={6} sm={12}>
+            <br/>
               <div className="img-container p-3">
                 <Image className="single-img" src={`../img/products/${product.image}`} />
               </div>
