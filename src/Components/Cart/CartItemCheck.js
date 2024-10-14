@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 
-const CartItemCheck = ({cartItem}) => {
+const CartItemCheck = ({cartItem, styles}) => {
   let [name, setName] = useState(null);
   let [price, setPrice] = useState(0);
   let [image, setImage] = useState(null);
@@ -15,20 +15,16 @@ const CartItemCheck = ({cartItem}) => {
   }, [cartItem, products]);
 
   return (
-    <div className="cart-item" >
-      <div className="cart-product">
-        <img src={`../img/products/${image}`} alt={name} />
-        <div>
-          <h3>{name}</h3>
+    <div className={styles.cartItem}>
+      <div className={styles.cartProduct}>
+        
+        <div><img src={`../img/products/${image}`} alt={name} />
+          <h5>{name}</h5>
         </div>
       </div>
-      <div className="cart-product-price">${price}</div>
-      <div>
-
-        <div className="count">{cartItem.qty}</div>
-   
-      </div>
-      <div className="cart-product-total-price">
+      <div className={styles.cartProductPrice}>${price}</div>
+      <div className={styles.count}>{cartItem.qty}</div>
+      <div className={styles.total}>
         ${cartItem.price * cartItem.qty}
       </div>
     </div>
