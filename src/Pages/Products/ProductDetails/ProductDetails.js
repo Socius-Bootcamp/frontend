@@ -57,7 +57,7 @@ const ProductDetails = () => {
   return (
     <Fragment>
       <TopNavbar />
-      <Container>
+      <Container style={{ marginBottom: "6rem" }}>
         {product ? (
           <Row className="my-5">
             <Col md={6} sm={12}>
