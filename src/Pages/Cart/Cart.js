@@ -87,13 +87,13 @@ const Cart = () => {
                   {outOfStock ? (
                     <>
                       <button disabled style={{ backgroundColor: "gray" }}>
-                        Check out
+                        Checkout
                       </button>
                       <p>Item(s) in your cart have 0 stock to sell, please remove them and refresh</p>
                     </>
                   ) : (
                     <button onClick={handleBuy} style={{ backgroundColor: "#a21cff", color: "#fff" }}>
-                      Check out
+                      Checkout
                     </button>
                   )}
                   <div className="continue-shopping">

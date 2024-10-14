@@ -18,9 +18,9 @@ const OrderDetail = () => {
   }
 
   return (
-    <div className="page-container" style={{ marginTop: "6rem", marginBottom: "6rem" }}>
+    <div className="page-container">
       <TopNavbar />
-      <div className="container mt-4">
+      <div className="container mt-4" style={{ marginTop: "6rem", marginBottom: "6rem" }}>
         {/* Header with the order number */}
         <h1 className="text-center">Order N°{order.id} Details</h1>
         <br/>

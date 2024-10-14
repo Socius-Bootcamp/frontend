@@ -3,6 +3,7 @@
 
 .navbar-wrapper {
     position: relative;
+    margin-top: 56px;
 }
 /* Styles for the sliding message */
 .sliding-text {
